@@ -1,0 +1,25 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/backend/.vs
+/backend/ReHub.Db.PostgreSQL/obj
+/src/BackendAPI/Rehub.Authentication/obj
+/src/Migrations/ReHub.Db.MSSQL/bin/Debug/net8.0
+/src/Migrations/ReHub.Db.MSSQL/obj
+/src/Migrations/ReHub.Db.PostgreSQL/bin/Debug/net8.0
+/src/Migrations/ReHub.Db.PostgreSQL/obj
+/src/ReHub.BackendAPI/bin/Debug/net8.0
+/src/ReHub.BackendAPI/Logs
+/src/ReHub.BackendAPI/obj
+/src/ReHub.DbDataModel/bin/Debug/net8.0
+/src/ReHub.DbDataModel/obj
+/src/ReHub.Utilities/bin/Debug/net8.0
+/src/ReHub.Utilities/obj
+/tests/BackendAPI.Tests/obj
+/tests/ReHub.BackendAPI.Tests/bin/Debug/net8.0
+/tests/ReHub.BackendAPI.Tests/obj
+/tests/ReHub.Data.Tests/bin/Debug/net8.0
+/tests/ReHub.Data.Tests/obj
+/.gitignore
+/.gitignore
