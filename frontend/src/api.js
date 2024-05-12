@@ -2,7 +2,7 @@ import axios from "axios";
 import { logout } from "./shared/utils/auth";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:5002/api",
+  baseURL: "http://192.168.1.173:5002/api",
   timeout: 1000,
 });
 
