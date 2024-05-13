@@ -1,8 +1,9 @@
 ﻿using System.Collections.Immutable;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Rehub.Authorization.Models;
 
-namespace ReHub.Utilities.JWT
+namespace Rehub.Authorization.Services
 {
     public interface IJwtAuthManager
     {

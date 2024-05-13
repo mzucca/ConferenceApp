@@ -5,26 +5,24 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{033BF716-114E-45AB-A552-4F78EB7E7966}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.DbDataModel", "..\src\ReHub.DbDataModel\ReHub.DbDataModel.csproj", "{987E0A4E-6858-456B-B06F-92AD096BE7DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.DbDataModel", "src\ReHub.DbDataModel\ReHub.DbDataModel.csproj", "{987E0A4E-6858-456B-B06F-92AD096BE7DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.BackendAPI", "..\src\ReHub.BackendAPI\ReHub.BackendAPI.csproj", "{6EDA5A42-130B-4789-BBD8-16A6FB202D8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.BackendAPI", "src\ReHub.BackendAPI\ReHub.BackendAPI.csproj", "{6EDA5A42-130B-4789-BBD8-16A6FB202D8F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.BackendAPI.Tests", "..\tests\ReHub.BackendAPI.Tests\ReHub.BackendAPI.Tests.csproj", "{816AFD05-92F8-4222-B48E-6C230AEA23E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.BackendAPI.Tests", "tests\ReHub.BackendAPI.Tests\ReHub.BackendAPI.Tests.csproj", "{816AFD05-92F8-4222-B48E-6C230AEA23E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Migrations", "Migrations", "{7379D205-BE3C-4878-9446-36D470D9FD86}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Db.SqlLite", "..\src\Migrations\ReHub.Db.SqlLite\ReHub.Db.SqlLite.csproj", "{45449FAD-F557-4C44-A2F3-F498C762F492}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Data.Tests", "..\tests\ReHub.Data.Tests\ReHub.Data.Tests.csproj", "{55196918-5CF9-446E-B850-334B9C0FAD52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Data.Tests", "tests\ReHub.Data.Tests\ReHub.Data.Tests.csproj", "{55196918-5CF9-446E-B850-334B9C0FAD52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{0775E416-E9A3-48E9-9AAC-AA3C403C9DC6}"
 	ProjectSection(SolutionItems) = preProject
-		..\docs\TODO.md = ..\docs\TODO.md
+		docs\TODO.md = docs\TODO.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Db.PostgreSQL", "..\src\Migrations\ReHub.Db.PostgreSQL\ReHub.Db.PostgreSQL.csproj", "{F0420A4D-FC39-4458-A4B4-1B35CB0E85B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Utilities", "src\ReHub.Utilities\ReHub.Utilities.csproj", "{42583DC0-3CB8-4F06-8390-F30C7B6FF2F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReHub.Utilities", "..\src\ReHub.Utilities\ReHub.Utilities.csproj", "{42583DC0-3CB8-4F06-8390-F30C7B6FF2F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReHub.Utilities.Tests", "tests\ReHub.Utilities.Tests\ReHub.Utilities.Tests.csproj", "{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rehub.Authorization", "src\Rehub.Authorization\Rehub.Authorization.csproj", "{A29F0A1F-8584-46DC-A828-4360E3BFD090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,31 +42,30 @@ Global
 		{816AFD05-92F8-4222-B48E-6C230AEA23E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{816AFD05-92F8-4222-B48E-6C230AEA23E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{816AFD05-92F8-4222-B48E-6C230AEA23E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45449FAD-F557-4C44-A2F3-F498C762F492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45449FAD-F557-4C44-A2F3-F498C762F492}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45449FAD-F557-4C44-A2F3-F498C762F492}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45449FAD-F557-4C44-A2F3-F498C762F492}.Release|Any CPU.Build.0 = Release|Any CPU
 		{55196918-5CF9-446E-B850-334B9C0FAD52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{55196918-5CF9-446E-B850-334B9C0FAD52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55196918-5CF9-446E-B850-334B9C0FAD52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55196918-5CF9-446E-B850-334B9C0FAD52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F0420A4D-FC39-4458-A4B4-1B35CB0E85B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0420A4D-FC39-4458-A4B4-1B35CB0E85B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0420A4D-FC39-4458-A4B4-1B35CB0E85B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0420A4D-FC39-4458-A4B4-1B35CB0E85B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42583DC0-3CB8-4F06-8390-F30C7B6FF2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42583DC0-3CB8-4F06-8390-F30C7B6FF2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42583DC0-3CB8-4F06-8390-F30C7B6FF2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42583DC0-3CB8-4F06-8390-F30C7B6FF2F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{816AFD05-92F8-4222-B48E-6C230AEA23E8} = {033BF716-114E-45AB-A552-4F78EB7E7966}
-		{45449FAD-F557-4C44-A2F3-F498C762F492} = {7379D205-BE3C-4878-9446-36D470D9FD86}
 		{55196918-5CF9-446E-B850-334B9C0FAD52} = {033BF716-114E-45AB-A552-4F78EB7E7966}
-		{F0420A4D-FC39-4458-A4B4-1B35CB0E85B9} = {7379D205-BE3C-4878-9446-36D470D9FD86}
+		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA} = {033BF716-114E-45AB-A552-4F78EB7E7966}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03143751-A94B-4C3A-800B-3C52C50C54A6}

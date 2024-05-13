@@ -6,6 +6,11 @@ At the moment only <b>PostgreSQL</b> is supported.
 To map inheritance we adopted the TPT (Table per Type) approach. 
 
 
+## PostgreSQL
+to create the database from powershell:
+1. Set the connection string in the environment variables like <i>ReHub__DbConfiguration__ConnectionString=Host=localhost; Database=ReHub; Username=rehub; Password=rehub</i>
+2. to <b>create migrations</b> <i>dotnet ef migrations add InitialCreate --context ReHub.Db.PostgreSQL.PostgresDbContext --project ..\ReHub.DbDataModel\ReHub.DbDataModel.csproj </i> (From the backendAPI folder)
+3. to <b>create the database</b> <i>dotnet ef database update</i>
 
 # TODO
 1. <b>Remove TEMP folder</b>

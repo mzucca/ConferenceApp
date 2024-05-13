@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Rehub.Authorization.Models;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.IdentityModel.Tokens.Jwt;
@@ -6,7 +7,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ReHub.Utilities.JWT
+namespace Rehub.Authorization.Services
 {
     public class JwtAuthManager(JwtTokenConfig jwtTokenConfig) : IJwtAuthManager
     {

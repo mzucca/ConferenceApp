@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ReHub.Utilities.JWT
+namespace Rehub.Authorization.Models
 {
     public class JwtAuthResult
     {

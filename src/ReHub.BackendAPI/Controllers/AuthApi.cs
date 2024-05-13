@@ -13,6 +13,10 @@ using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using BackendAPI.Models;
+using System.Security.Claims;
+using ReHub.BackendAPI.Models;
+using Microsoft.AspNetCore.Identity;
+using Rehub.Authorization.Services;
 
 namespace BackendAPI.Controllers
 {
@@ -21,7 +25,23 @@ namespace BackendAPI.Controllers
     /// </summary>
     [ApiController]
     public class AuthApiController : ControllerBase
-    { 
+    {
+        private readonly IUserService _userService;
+        private readonly IJwtAuthManager _jwtAuthManager;
+        private readonly ILogger<AuthApiController> _logger;
+        private IdentityOptions _options = new IdentityOptions();
+
+        public AuthApiController(
+            IUserService userService,
+            IJwtAuthManager jwtAuthManager,
+            ILogger<AuthApiController> logger
+        )
+        {
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _jwtAuthManager = jwtAuthManager ?? throw new ArgumentNullException(nameof(jwtAuthManager));
+            _logger=logger ?? throw new ArgumentNullException(nameof( logger));
+        }
+
         /// <summary>
         /// Confirm Email
         /// </summary>
@@ -34,8 +54,8 @@ namespace BackendAPI.Controllers
         [SwaggerOperation("ConfirmEmailConfirmEmailTokenPost")]
         [SwaggerResponse(statusCode: 200, type: typeof(Object), description: "Successful Response")]
         [SwaggerResponse(statusCode: 422, type: typeof(HTTPValidationError), description: "Validation Error")]
-        public virtual IActionResult ConfirmEmailConfirmEmailTokenPost([FromRoute][Required]Object token)
-        { 
+        public virtual IActionResult ConfirmEmailConfirmEmailTokenPost([FromRoute][Required] Object token)
+        {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(Object));
 
@@ -43,10 +63,10 @@ namespace BackendAPI.Controllers
             // return StatusCode(422, default(HTTPValidationError));
             string exampleJson = null;
             exampleJson = "\"\"";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<Object>(exampleJson)
-                        : default(Object);            //TODO: Change the data returned
+
+            var example = exampleJson != null
+            ? JsonConvert.DeserializeObject<Object>(exampleJson)
+            : default(Object);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -58,24 +78,41 @@ namespace BackendAPI.Controllers
         /// <response code="422">Validation Error</response>
         [HttpPost]
         [Route("/rehub/login")]
+        [AllowAnonymous]
         //[ValidateModelState]
-        [SwaggerOperation("LoginUserLoginPost")]
+        [SwaggerOperation("Login")]
         [SwaggerResponse(statusCode: 200, type: typeof(Object), description: "Successful Response")]
         [SwaggerResponse(statusCode: 422, type: typeof(HTTPValidationError), description: "Validation Error")]
-        public virtual IActionResult LoginUserLoginPost([FromBody]Login body)
-        { 
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(Object));
+        public virtual IActionResult Login([FromBody] Login request)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Login attempted with invalid credentials");
+                return BadRequest();
+            }
+            var userDefinition = _userService.GetUserCredentials(request.Email, request.Password);
+            if (userDefinition == null)
+            {
+                _logger.LogError($"Login '{request.Email}' attempted with invalid credentials");
+                return Unauthorized();
+            }
+            var claims = new[]
+            {
+                new Claim(_options.ClaimsIdentity.UserIdClaimType,userDefinition.Id.ToString()),
+                new Claim(ClaimTypes.Name,request.Email),
+                new Claim(_options.ClaimsIdentity.UserNameClaimType,userDefinition.Name),
+                new Claim(ClaimTypes.Role, userDefinition.Role)
+            };
 
-            //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(422, default(HTTPValidationError));
-            string exampleJson = null;
-            exampleJson = "\"\"";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<Object>(exampleJson)
-                        : default(Object);            //TODO: Change the data returned
-            return new ObjectResult(example);
+            var jwtResult = _jwtAuthManager.GenerateTokens(request.Email, claims, DateTime.Now);
+            _logger.LogInformation($"User [{request.Email}] logged in the system.");
+            return Ok(new LoginResult
+            {
+                UserName = request.Email,
+                Role = "admin", // TODO
+                AccessToken = jwtResult.AccessToken,
+                RefreshToken = jwtResult.RefreshToken.TokenString
+            });
         }
 
         /// <summary>
@@ -89,15 +126,15 @@ namespace BackendAPI.Controllers
         [SwaggerOperation("ResendEmailConfirmationResendConfirmationPost")]
         [SwaggerResponse(statusCode: 200, type: typeof(ResultMessage), description: "Successful Response")]
         public virtual IActionResult ResendEmailConfirmationResendConfirmationPost()
-        { 
+        {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(ResultMessage));
             string exampleJson = null;
             exampleJson = "{\r\n  \"type\" : \"\",\r\n  \"message\" : \"\",\r\n  \"value\" : \"\"\r\n}";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<ResultMessage>(exampleJson)
-                        : default(ResultMessage);            //TODO: Change the data returned
+
+            var example = exampleJson != null
+            ? JsonConvert.DeserializeObject<ResultMessage>(exampleJson)
+            : default(ResultMessage);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -114,8 +151,8 @@ namespace BackendAPI.Controllers
         [SwaggerOperation("VerifyTokenVerifyTokenPost")]
         [SwaggerResponse(statusCode: 200, type: typeof(TokenVerify), description: "Successful Response")]
         [SwaggerResponse(statusCode: 422, type: typeof(HTTPValidationError), description: "Validation Error")]
-        public virtual IActionResult VerifyTokenVerifyTokenPost([FromBody]Token body)
-        { 
+        public virtual IActionResult VerifyTokenVerifyTokenPost([FromBody] Token body)
+        {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(TokenVerify));
 
@@ -123,10 +160,10 @@ namespace BackendAPI.Controllers
             // return StatusCode(422, default(HTTPValidationError));
             string exampleJson = null;
             exampleJson = "{\r\n  \"is_valid\" : \"\"\r\n}";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<TokenVerify>(exampleJson)
-                        : default(TokenVerify);            //TODO: Change the data returned
+
+            var example = exampleJson != null
+            ? JsonConvert.DeserializeObject<TokenVerify>(exampleJson)
+            : default(TokenVerify);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
     }

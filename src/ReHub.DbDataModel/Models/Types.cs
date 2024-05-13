@@ -11,7 +11,8 @@
     {
         Admin,
         Doctor,
-        Client
+        Client,
+        None
     }
     public enum UserSubType
     {

@@ -8,7 +8,7 @@ namespace ReHub.DbDataModel.Models;
 [Table("users")]
 [Index("Email", IsUnique = true)]
 [Index("Id", IsUnique = true)]
-public abstract class User
+public class User
 {
     public User()
     {

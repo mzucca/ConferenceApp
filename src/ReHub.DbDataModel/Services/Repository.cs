@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
+using ReHub.Db.PostgreSQL;
 
 namespace ReHub.DbDataModel.Services
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly DataContext _datacontext;
-        private readonly ILogger _logger;
+        protected readonly PostgresDbContext _datacontext;
+        protected readonly ILogger _logger;
 
-        public Repository(DataContext dataContext, ILogger logger) 
+        public Repository(PostgresDbContext dataContext, ILogger logger) 
         {
             _datacontext = dataContext;
             _logger = logger;
@@ -29,15 +30,6 @@ namespace ReHub.DbDataModel.Services
         {
             throw new NotImplementedException();
         }
-
-        public void Dispose()
-        {
-            Dispose();
-            GC.SuppressFinalize(this);
-        }
-
-
-
         public TEntity GetByID(int entityId)
         {
             throw new NotImplementedException();

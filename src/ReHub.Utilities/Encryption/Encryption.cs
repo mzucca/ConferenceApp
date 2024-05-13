@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReHub.Utilities.Encryption
 {
@@ -38,6 +33,37 @@ namespace ReHub.Utilities.Encryption
 
         private string Password { get; }
         private Type AlgorithmType { get; }
+        private byte[] Salt;
+        #region Constrctors
+        /// <summary>
+        /// Constructs a new <c>Encryption</c> instance.
+        /// </summary>
+        /// <param name="password">Specifies the encryption password. Leading and trailing spaces are removed.</param>
+        /// <param name="algorithm">Specifies which encryption algorithm is used.</param>
+        public Encryption(string password, EncryptionAlgorithm algorithm)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Password is required.", nameof(password));
+            Password = password.Trim();
+            AlgorithmType = AlgorithmLookup[algorithm];
+        }
+        /// <summary>
+        /// Constructs a new <c>Encryption</c> instance.
+        /// </summary>
+        /// <param name="password">Specifies the encryption password. Leading and trailing spaces are removed.</param>
+        /// <param name="algorithm">Specifies which encryption algorithm is used.</param>
+        /// <param name="salt">Specifies a salt to create Initialization Vector IV </param>
+        public Encryption(string password, byte[] salt, EncryptionAlgorithm algorithm)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Password is required.", nameof(password));
+            if (salt == null || salt.Length != SaltLength)
+                throw new ArgumentException($"Invalid Salt: salt is required and must be {SaltLength} bytes long.", nameof(password));
+            Password = password.Trim();
+            AlgorithmType = AlgorithmLookup[algorithm];
+            Salt = salt.ToArray();
+        }
+        #endregion
 
         /// <summary>
         /// Converts a byte array to a string.
@@ -52,19 +78,6 @@ namespace ReHub.Utilities.Encryption
         /// <param name="s">The string to be converted.</param>
         /// <returns>Returns the converted byte array.</returns>
         public static byte[] DecodeBytesFromString(string s) => Convert.FromBase64String(s);
-
-        /// <summary>
-        /// Constructs a new <c>Encryption</c> instance.
-        /// </summary>
-        /// <param name="password">Specifies the encryption password. Leading and trailing spaces are removed.</param>
-        /// <param name="algorithm">Specifies which encryption algorithm is used.</param>
-        public Encryption(string password, EncryptionAlgorithm algorithm)
-        {
-            if (string.IsNullOrWhiteSpace(password))
-                throw new ArgumentException("Password is required.", nameof(password));
-            Password = password.Trim();
-            AlgorithmType = AlgorithmLookup[algorithm];
-        }
 
         #region Encryption stream creation methods
 
@@ -81,15 +94,16 @@ namespace ReHub.Utilities.Encryption
         /// <returns>An instance of the <see cref="EncryptionWriter"/> class.</returns>
         public EncryptionWriter CreateStreamWriter(Stream stream)
         {
-            // Create a random salt and write to stream
-            byte[] salt = CreateSalt();
-            stream.Write(salt, 0, salt.Length);
+            if(Salt == null)
+                // Create a random salt and write to stream
+                Salt = CreateSalt();
+            stream.Write(Salt, 0, Salt.Length);
             // Create symmetric algorithm
             SymmetricAlgorithm algorithm = CreateAlgorithm();
             algorithm.Padding = PaddingMode.PKCS7;
             // Create key and IV
             byte[] key, iv;
-            GenerateKeyAndIv(algorithm, salt, out key, out iv);
+            GenerateKeyAndIv(algorithm, Salt, out key, out iv);
             // Create EncryptionWriter
             ICryptoTransform encryptor = algorithm.CreateEncryptor(key, iv);
             CryptoStream cs = new CryptoStream(stream, encryptor, CryptoStreamMode.Write);

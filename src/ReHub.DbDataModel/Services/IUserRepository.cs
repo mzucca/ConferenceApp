@@ -2,6 +2,6 @@
 {
     public interface IUserRepository<T> : IRepository<T>
     {
-        T GetByEMail(string email);
+        T? GetByEMail(string email);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ReHub.DbDataModel.Models;
 using ReHub.DbDataModel.Services;
 
 namespace ReHub.DbDataModel.Extensions
@@ -13,6 +14,7 @@ namespace ReHub.DbDataModel.Extensions
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IUserRepository<User>, UserRepository>();
             return services;
         }
     }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using ReHub.DbDataModel;
+using ReHub.DbDataModel.Configuration;
+using ReHub.DbDataModel.Extensions;
 using ReHub.DbDataModel.Models;
 using ReHub.Utilities.Encryption;
 
@@ -9,10 +12,16 @@ namespace ReHub.Db.PostgreSQL
     public class PostgresDbContext : DataContext
     {
         private readonly IEncryptionProvider _provider;
-        public PostgresDbContext(IConfiguration configuration, DbContextOptions options) : base(configuration,options) 
+        private readonly DbConfiguration _dbConfiguration;
+        private readonly ILogger<PostgresDbContext>? _logger;
+
+        public PostgresDbContext(IConfiguration configuration, DbContextOptions options, ILogger<PostgresDbContext> logger) : base(configuration,options) 
         {
-            // TODO extract encrypt key in a safe environment
-            _provider = new GenerateEncryptionProvider("rehub_encrypt_key", EncryptionAlgorithm.Aes);
+            _dbConfiguration = configuration.GetDbConfiguration();
+            if (_dbConfiguration == null) throw new InvalidOperationException("Cannot find suitable DB configuration, please check your configuration environment");
+            // We need to use a fixed salt to have the same results over time
+            _provider = new GenerateEncryptionProvider(_dbConfiguration.EncryptionKey,_dbConfiguration.Salt, EncryptionAlgorithm.Aes);
+            _logger = logger;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,7 +29,7 @@ namespace ReHub.Db.PostgreSQL
             var connectionString = _configuration[":DbConfiguration:ConnectionString"]; ;
             //_logger.LogInformation($"Creating a PostgreSQL connection using:'{connectionString}'");
             optionsBuilder.UseNpgsql(connectionString,
-                b => b.MigrationsAssembly("ReHub.Db.PostgreSQL"));
+                b => b.MigrationsAssembly("ReHub.DbDataModel"));
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,7 +54,7 @@ namespace ReHub.Db.PostgreSQL
                         Gender = GenderType.Male,
                         Password = "123456789",
                         Email = "marioz63@gmail.com",
-                        Type = UserType.Doctor,
+                        //Type = UserType.Doctor,
                         IsVerified = true,
                         AvatarUrl= "test"
                     }

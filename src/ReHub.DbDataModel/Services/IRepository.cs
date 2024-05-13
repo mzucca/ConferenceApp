@@ -1,6 +1,6 @@
 ﻿namespace ReHub.DbDataModel.Services
 {
-    public interface IRepository<T> : IDisposable
+    public interface IRepository<T>
     {
         IEnumerable<T> GetAlls();
         IEnumerable<T> GetPaged(int position, int size);

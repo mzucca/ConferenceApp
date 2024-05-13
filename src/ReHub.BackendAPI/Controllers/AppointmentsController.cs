@@ -2,9 +2,12 @@ using BackendAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Rehub.Authorization.Extensions;
+using ReHub.Db.PostgreSQL;
 using ReHub.DbDataModel;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace BackendAPI.Controllers
 {
@@ -15,35 +18,37 @@ namespace BackendAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly ILogger<AppointmentsController> _logger;
+       private readonly ILogger<AppointmentsController> _logger;
 
         public AppointmentsController(IConfiguration configuration,
-            DataContext dataContext,
             ILogger<AppointmentsController> logger)
         {
             _configuration = configuration;
             _logger = logger;
-            }
+         }
         /// <summary>
         /// Cancel Appointment
         /// </summary>
         /// <param name="appointmentId"></param>
         /// <response code="200">Successful Response</response>
         /// <response code="422">Validation Error</response>
-        [HttpPost]
+        [HttpPost,Authorize]
         [Route("/rehub/appointments/{appointment_id}/cancel")]
         //[Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         //[ValidateModelState]
         [SwaggerOperation("CancelAppointmentAppointmentsAppointmentIdCanselPost")]
         [SwaggerResponse(statusCode: 200, type: typeof(Object), description: "Successful Response")]
         [SwaggerResponse(statusCode: 422, type: typeof(HTTPValidationError), description: "Validation Error")]
-        public virtual IActionResult CancelAppointmentAppointmentsAppointmentIdCanselPost([FromRoute][Required] Object appointmentId)
+        public virtual IActionResult CancelAppointment([FromRoute][Required] int appointment_id)
         {
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(Object));
+            if(User == null)
+            {
+                _logger.LogError("Logged user cannot be null");
+                return Unauthorized();
+            }
+            var role = User.GetRole();
+            var id = User.GetUserId();
 
-            //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(422, default(HTTPValidationError));
             string exampleJson = null;
             exampleJson = "\"\"";
 

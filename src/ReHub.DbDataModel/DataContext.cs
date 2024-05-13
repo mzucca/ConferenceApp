@@ -10,7 +10,7 @@ namespace ReHub.DbDataModel
         protected readonly IConfiguration _configuration;
         protected readonly ILogger _logger;
 
-        public DataContext(IConfiguration configuration) //, ILogger logger)
+        public DataContext(IConfiguration configuration, DbContextOptions options) : base(options)
         {
             _configuration = configuration;
            // _logger = logger;

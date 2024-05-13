@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-
-namespace ReHub.Utilities.Encryption
+﻿namespace ReHub.Utilities.Encryption
 {
     public class GenerateEncryptionProvider : IEncryptionProvider
     {
@@ -11,7 +8,10 @@ namespace ReHub.Utilities.Encryption
         {
             _encrypt = new Encryption(password, algorithm);
         }
-
+        public GenerateEncryptionProvider(string password,byte[] salt, EncryptionAlgorithm algorithm)
+        {
+            _encrypt = new Encryption(password,salt, algorithm);
+        }
         public string Encrypt(string dataToEncrypt)
         {
             return _encrypt.Encrypt(dataToEncrypt);
