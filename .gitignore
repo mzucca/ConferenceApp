@@ -23,3 +23,11 @@
 /tests/ReHub.Data.Tests/obj
 /.gitignore
 /.gitignore
+/.vs
+/Rehub.Authorization/obj
+/src/Rehub.Authorization/bin/Debug/net8.0
+/src/Rehub.Authorization/obj
+/tests/ReHub.Utilities.Tests/bin/Debug/net8.0
+/tests/ReHub.Utilities.Tests/obj
+/temp.csv
+/temp2.csv
