@@ -32,3 +32,7 @@
 /temp.csv
 /temp2.csv
 /src/ReHub.BackendAPI/ReHub.BackendAPI.csproj.user
+/src/ReHub.Frontend/obj
+/src/ReHub.Frontend/bin/Debug/net8.0
+/src/Client/rehubapp/obj/Debug
+/src/Client/rehubapp
