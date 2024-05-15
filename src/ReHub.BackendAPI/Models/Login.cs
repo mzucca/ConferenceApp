@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 
 namespace BackendAPI.Models
@@ -11,7 +10,7 @@ namespace BackendAPI.Models
         /// Gets or Sets Email
         /// </summary>
         [Required]
-        [DataMember(Name="email")]
+        [JsonPropertyName("email")]
         public string Email { get; set; }
 
         /// <summary>

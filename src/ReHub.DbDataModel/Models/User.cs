@@ -8,7 +8,7 @@ namespace ReHub.DbDataModel.Models;
 [Table("users")]
 [Index("Email", IsUnique = true)]
 [Index("Id", IsUnique = true)]
-public class User
+public class User : BaseReHubModel
 {
     public User()
     {
@@ -18,9 +18,6 @@ public class User
         Gender = GenderType.None;
         IsVerified = false;
     }
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
 
     [Required]
     [MaxLength(120)]
@@ -51,10 +48,6 @@ public class User
     public bool Deleted { get; set; } = false;
 
     public bool IsVerified { get; set; } = false;
-
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     public virtual ICollection<ConferenceHistory> ConferenceActions { get; set; }
 

@@ -1,14 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReHub.DbDataModel.Models;
 
 [Table("appointment_clients")]
-public partial class AppointmentClient
+public partial class AppointmentClient : BaseReHubModel
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
 
     [Column("client_id")]
     public int? ClientId { get; set; }

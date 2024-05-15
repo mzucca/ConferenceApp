@@ -1,16 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace ReHub.DbDataModel.Models;
 
 [Table("discount_coupons")]
 [Index("Name", IsUnique = true)]
-public partial class DiscountCoupon
+public partial class DiscountCoupon : BaseReHubModel
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
 
     [Column("name")]
     public string Name { get; set; } = null!;
@@ -27,11 +23,6 @@ public partial class DiscountCoupon
     [Column("validity_until")]
     public DateTime ValidityUntil { get; set; }
 
-    [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
-
-    [Column("updated_at")]
-    public DateTime UpdatedAt { get; set; }
 
     //[InverseProperty("Coupon")]
     public virtual ICollection<CouponUser> CouponUsers { get; set; } = new List<CouponUser>();

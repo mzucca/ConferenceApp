@@ -1,20 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace ReHub.DbDataModel.Models;
 
 [Table("notifications")]
 [Index("SenderId")]
-public partial class Notification
+public partial class Notification : BaseReHubModel
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
-    [Column("created_at")]
-    public DateTime? CreatedAt { get; set; }
-
     [Column("message")]
     public string Message { get; set; } = null!;
 

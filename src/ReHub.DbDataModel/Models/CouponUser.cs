@@ -4,12 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ReHub.DbDataModel.Models;
 
 [Table("coupon_users")]
-public partial class CouponUser
+public partial class CouponUser : BaseReHubModel
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
     [Column("coupon_id")]
     public int CouponId { get; set; }
 

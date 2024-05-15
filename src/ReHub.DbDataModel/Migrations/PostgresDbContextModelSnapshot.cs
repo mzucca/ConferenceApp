@@ -26,15 +26,14 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ClientId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
@@ -59,7 +58,7 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("interval")
                         .HasColumnName("time");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
@@ -76,8 +75,7 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -89,6 +87,10 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("client_id");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
                     b.Property<int?>("PainRateAfter")
                         .HasColumnType("integer")
                         .HasColumnName("pain_rate_after");
@@ -96,6 +98,10 @@ namespace ReHub.DbDataModel.Migrations
                     b.Property<int?>("PainRateBefore")
                         .HasColumnType("integer")
                         .HasColumnName("pain_rate_before");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id");
 
@@ -145,6 +151,10 @@ namespace ReHub.DbDataModel.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
                     b.Property<string>("FiscalCode")
                         .IsRequired()
                         .HasMaxLength(16)
@@ -173,6 +183,10 @@ namespace ReHub.DbDataModel.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId")
@@ -185,8 +199,7 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -199,7 +212,7 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("text")
                         .HasColumnName("channel_name");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
@@ -210,7 +223,7 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_active");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
@@ -230,8 +243,7 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -248,11 +260,11 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("conference_id");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
@@ -272,8 +284,7 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -284,6 +295,14 @@ namespace ReHub.DbDataModel.Migrations
                     b.Property<int>("CouponId")
                         .HasColumnType("integer")
                         .HasColumnName("coupon_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<int>("UseCount")
                         .HasColumnType("integer")
@@ -302,8 +321,7 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -353,23 +371,23 @@ namespace ReHub.DbDataModel.Migrations
                         {
                             Id = 1,
                             CouponType = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6966),
                             Discount = 5.0,
                             DiscountType = 0,
                             Name = "SALE",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ValidityUntil = new DateTime(2024, 6, 12, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(2040)
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6966),
+                            ValidityUntil = new DateTime(2024, 6, 14, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6969)
                         },
                         new
                         {
                             Id = 2,
                             CouponType = 0,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6974),
                             Discount = 1.0,
                             DiscountType = 1,
                             Name = "FIX",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ValidityUntil = new DateTime(2024, 6, 12, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(2047)
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6974),
+                            ValidityUntil = new DateTime(2024, 6, 14, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6975)
                         });
                 });
 
@@ -377,14 +395,17 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Cost")
                         .HasColumnType("double precision")
                         .HasColumnName("cost");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<int>("LessonsNum")
                         .HasColumnType("integer")
@@ -395,6 +416,10 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
                     b.HasKey("Id");
 
                     b.ToTable("lesson_packages");
@@ -404,22 +429,28 @@ namespace ReHub.DbDataModel.Migrations
                         {
                             Id = 1,
                             Cost = 9.9000000000000004,
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6933),
                             LessonsNum = 1,
-                            Name = "PACKAGE NAME N.001"
+                            Name = "PACKAGE NAME N.001",
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6933)
                         },
                         new
                         {
                             Id = 2,
                             Cost = 44.899999999999999,
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6936),
                             LessonsNum = 5,
-                            Name = "PACKAGE NAME N.002"
+                            Name = "PACKAGE NAME N.002",
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6936)
                         },
                         new
                         {
                             Id = 3,
                             Cost = 79.900000000000006,
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6937),
                             LessonsNum = 10,
-                            Name = "PACKAGE NAME N.003"
+                            Name = "PACKAGE NAME N.003",
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6937)
                         });
                 });
 
@@ -427,12 +458,11 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
@@ -444,6 +474,10 @@ namespace ReHub.DbDataModel.Migrations
                     b.Property<int>("SenderId")
                         .HasColumnType("integer")
                         .HasColumnName("sender_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
@@ -461,14 +495,21 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<int>("NotificationId")
                         .HasColumnType("integer")
                         .HasColumnName("notification_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
@@ -535,8 +576,7 @@ namespace ReHub.DbDataModel.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -586,7 +626,8 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("character varying(150)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
@@ -620,7 +661,8 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id");
 
@@ -646,7 +688,7 @@ namespace ReHub.DbDataModel.Migrations
                         {
                             Id = 1,
                             AvatarUrl = "test",
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1693),
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6612),
                             Deleted = false,
                             Email = "9iYms6TCxuISbWFyaW96NjNAZ21haWwuY29t",
                             Gender = 0,
@@ -655,7 +697,7 @@ namespace ReHub.DbDataModel.Migrations
                             Password = "9iYms6TCxuIJMTIzNDU2Nzg5",
                             Surname = "Z.",
                             Type = 0,
-                            UpdatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1694)
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6613)
                         });
                 });
 
@@ -685,7 +727,7 @@ namespace ReHub.DbDataModel.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1979),
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6834),
                             Deleted = false,
                             Email = "9iYms6TCxuIRdGVzdDFAZXhhbXBsZS5jb20=",
                             Gender = 3,
@@ -694,14 +736,14 @@ namespace ReHub.DbDataModel.Migrations
                             Password = "9iYms6TCxuIJMTIzNDU2Nzg5",
                             Surname = "Test01",
                             Type = 0,
-                            UpdatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1980),
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6835),
                             Balance = 0,
                             SubType = 0
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1982),
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6899),
                             Deleted = false,
                             Email = "9iYms6TCxuIRdGVzdDJAZXhhbXBsZS5jb20=",
                             Gender = 3,
@@ -710,7 +752,7 @@ namespace ReHub.DbDataModel.Migrations
                             Password = "9iYms6TCxuIJMTIzNDU2Nzg5",
                             Surname = "Test02",
                             Type = 0,
-                            UpdatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1982),
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6899),
                             Balance = 0,
                             SubType = 0
                         });
@@ -735,7 +777,7 @@ namespace ReHub.DbDataModel.Migrations
                         {
                             Id = 2,
                             AvatarUrl = "https://static.wikia.nocookie.net/rickandmorty/images/3/3f/Young_Adult_Rick.png",
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1949),
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6804),
                             Deleted = false,
                             Email = "9iYms6TCxuITZG9jdG9yMUBleGFtcGxlLmNvbQ==",
                             Gender = 0,
@@ -744,7 +786,7 @@ namespace ReHub.DbDataModel.Migrations
                             Password = "9iYms6TCxuIJMTIzNDU2Nzg5",
                             Surname = "Sanchez",
                             Type = 1,
-                            UpdatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1949),
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6805),
                             About = "Text about doctor #3",
                             SubType = 1
                         },
@@ -752,7 +794,7 @@ namespace ReHub.DbDataModel.Migrations
                         {
                             Id = 3,
                             AvatarUrl = "https://static.wikia.nocookie.net/marveldatabase/images/0/02/Adam_Warlock_%28Earth-829%29_from_Hercules_Vol_2_3_0001.jpg",
-                            CreatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1953),
+                            CreatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6809),
                             Deleted = false,
                             Email = "9iYms6TCxuITZG9jdG9yMkBleGFtcGxlLmNvbQ==",
                             Gender = 0,
@@ -761,7 +803,7 @@ namespace ReHub.DbDataModel.Migrations
                             Password = "9iYms6TCxuIJMTIzNDU2Nzg5",
                             Surname = "Warlock",
                             Type = 1,
-                            UpdatedAt = new DateTime(2024, 5, 13, 13, 54, 31, 878, DateTimeKind.Utc).AddTicks(1953),
+                            UpdatedAt = new DateTime(2024, 5, 15, 8, 6, 31, 16, DateTimeKind.Utc).AddTicks(6809),
                             About = "Text about doctor #4",
                             SubType = 1
                         });

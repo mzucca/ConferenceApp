@@ -1,25 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace ReHub.DbDataModel.Models;
 
 [Table("conference_history")]
 [Index("Id", IsUnique = true)]
-public partial class ConferenceHistory
+public partial class ConferenceHistory : BaseReHubModel
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
     [Column("action")]
     public string Action { get; set; } = null!;
-
-    [Column("created_at")]
-    public DateTime? CreatedAt { get; set; }
-
-    [Column("updated_at")]
-    public DateTime? UpdatedAt { get; set; }
 
     [Column("conference_id")]
     public int? ConferenceId { get; set; }

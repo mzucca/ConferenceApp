@@ -1,56 +1,35 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using ReHub.Db.PostgreSQL;
 using ReHub.DbDataModel.Models;
 
 namespace ReHub.DbDataModel.Services
 {
-    public class AppointmentRepo : IAppointmentRepository
+    public class AppointmentRepository : IAppointmentRepository
     {
         private readonly DataContext _context;
-        private readonly ILogger<AppointmentRepo> _logger;
+        private readonly ILogger<AppointmentRepository> _logger;
 
-        public AppointmentRepo(DataContext context, ILogger<AppointmentRepo> logger)
+        public AppointmentRepository(PostgresDbContext context, ILogger<AppointmentRepository> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        public async Task<Appointment> Get(int appointmentId)
+        public Task<Appointment> Get(int appointmentId)
         {
-            //using (var session = new AsyncSession())
-            //{
-            //    var query = session.Query<Appointment>()
-            //        .Include(a => a.Listeners)
-            //        .Include(a => a.Speaker)
-            //        .Where(a => a.Id == appointmentId);
-
-            //    var result = await query.FirstOrDefaultAsync();
-            //    return result;
-            //}
-            return null;
+            return _context.Appointments.FirstOrDefaultAsync(a => a.Id == appointmentId);
         }
 
-        public async Task<Appointment> GetByTime(int doctorId, DateTime date, TimeSpan time)
+        public Task<Appointment> GetByTime(int doctorId, DateTime date, TimeSpan time)
         {
-            //using (var session = new AsyncSession())
-            //{
-            //    var query = session.Query<Appointment>()
-            //        .Where(a => a.SpeakerId == doctorId && a.Date == date.Date && a.Time == time);
-
-            //    var result = await query.FirstOrDefaultAsync();
-            //    return result;
-            //}
-            return null;
-
+            return _context.Appointments.FirstOrDefaultAsync(a=> a.SpeakerId == doctorId && a.Date == DateOnly.FromDateTime(date) && a.Time == time);
         }
 
-        public async Task<Appointment> GetCurrentActiveAppointment(int userId, int secondsBackOff = 10 * 60)
+        public Task<Appointment> GetCurrentActiveAppointment(int userId, int secondsBackOff = 10 * 60)
         {
-            //using (var session = new AsyncSession())
-            //{
-            //    var query = session.Query<Appointment>()
-            //        .Include(a => a.Speaker)
-            //        .Include(a => a.Listeners)
-            //        .Where(a => (a.SpeakerId == userId || a.Listeners.Any(l => l.Id == userId)) &&
+            //_context.Appointments.FirstOrDefaultAsync(
+            //    a => (a.SpeakerId == userId || a.Listeners.Any(l => l.Id == userId)) &&
             //            (a.Status == AppointmentStatusType.Active ||
             //             a.UpdatedAt > DateTime.UtcNow.AddSeconds(-secondsBackOff)));
 
@@ -170,18 +149,9 @@ namespace ReHub.DbDataModel.Services
             }
         }
 
-        private async Task<AppointmentClient> GetAppointmentListener(int appointmentId, int clientId)
+        private Task<AppointmentClient> GetAppointmentListener(int appointmentId, int clientId)
         {
-            //using (var session = new AsyncSession())
-            //{
-            //    var query = session.Query<AppointmentClients>()
-            //        .Where(l => l.AppointmentId == appointmentId && l.ClientId == clientId);
-
-            //    var result = await query.FirstOrDefaultAsync();
-            //    return result;
-            //}
-            return null;
-
+            return _context.AppointmentClients.FirstOrDefaultAsync(l => l.AppointmentId == appointmentId && l.ClientId == clientId);
         }
 
         public async Task<Appointment> ChangeStatus(int appointmentId, AppointmentStatusType status)

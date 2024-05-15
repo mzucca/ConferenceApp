@@ -1,4 +1,7 @@
-﻿namespace ReHub.DbDataModel.Models
+﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
+namespace ReHub.DbDataModel.Models
 {
     public enum GenderType
     {
@@ -7,16 +10,24 @@
         Other,
         None
     }
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum UserType
     {
+        [EnumMember(Value = "admin")]
         Admin,
+        [EnumMember(Value = "doctor")]
         Doctor,
+        [EnumMember(Value = "client")]
         Client,
+        [EnumMember(Value = "none")]
         None
     }
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum UserSubType
     {
+        [EnumMember(Value = "anamnesis")]
         Anamnesis,
+        [EnumMember(Value = "physio")]
         Physio
     }
     public enum AppointmentStatusType

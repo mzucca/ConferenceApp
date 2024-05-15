@@ -1,21 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReHub.DbDataModel.Models;
 
 [Table("appointments")]
-public partial class Appointment
+public partial class Appointment : BaseReHubModel
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
-    [Column("created_at")]
-    public DateTime? CreatedAt { get; set; }
-
-    [Column("updated_at")]
-    public DateTime? UpdatedAt { get; set; }
-
     [Column("date")]
     public DateOnly Date { get; set; }
 
@@ -23,7 +12,7 @@ public partial class Appointment
     public TimeSpan Time { get; set; }
 
     [Column("status")]
-    public string Status { get; set; } = null!;
+    public AppointmentStatusType Status { get; set; } = AppointmentStatusType.Pending;
 
     [Column("max_listeners")]
     public int MaxListeners { get; set; }

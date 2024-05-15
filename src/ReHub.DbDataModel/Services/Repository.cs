@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using ReHub.Db.PostgreSQL;
+using ReHub.DbDataModel.Models;
 
 namespace ReHub.DbDataModel.Services
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseReHubModel
     {
         protected readonly PostgresDbContext _datacontext;
         protected readonly ILogger _logger;
@@ -30,11 +31,13 @@ namespace ReHub.DbDataModel.Services
         {
             throw new NotImplementedException();
         }
-        public TEntity GetByID(int entityId)
+        public TEntity? GetByID(int entityId)
         {
-            throw new NotImplementedException();
-        }
+            var entities = _datacontext.Set<TEntity>();
+            if (entities == null) return null;
 
+            return entities.FirstOrDefault<TEntity>(u => u.Id == entityId);
+        }
         public void Insert(TEntity entity)
         {
             throw new NotImplementedException();

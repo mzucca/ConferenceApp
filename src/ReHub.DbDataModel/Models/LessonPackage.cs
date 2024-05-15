@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReHub.DbDataModel.Models;
 
 [Table("lesson_packages")]
 [PrimaryKey("Id")]
-public partial class LessonPackage
+public partial class LessonPackage : BaseReHubModel
 {
-    [Column("id")]
-    public int Id { get; set; }
 
     [Column("name")]
     public string Name { get; set; } = null!;

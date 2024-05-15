@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace ReHub.DbDataModel.Models;
@@ -7,12 +6,8 @@ namespace ReHub.DbDataModel.Models;
 [Table("notification_recipients")]
 [Index("NotificationId")]
 [Index("UserId")]
-public partial class NotificationRecipient
+public partial class NotificationRecipient : BaseReHubModel
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
-
     [Column("notification_id")]
     public int NotificationId { get; set; }
 

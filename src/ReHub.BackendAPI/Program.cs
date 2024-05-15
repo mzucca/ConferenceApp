@@ -1,20 +1,35 @@
-
 using Microsoft.EntityFrameworkCore;
 using ReHub.Db.PostgreSQL;
-using ReHub.DbDataModel;
+using ReHub.Utilities.Extensions;
 using Serilog;
 using ReHub.DbDataModel.Extensions;
 using Rehub.Authorization.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Rehub.BackendAPI
 {
     public class Program
     {
+        internal static readonly string CORS_ALLOW_LOCALHOST = "AllowLocalhost";
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            // TODO manage CORS policies
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(CORS_ALLOW_LOCALHOST,
+                builder =>
+                {
+                    builder
+                    .WithOrigins("http://localhost:9000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                });
+            });
 
             //Add support to logging with SERILOG
             builder.Host.UseSerilog((context, configuration) =>
@@ -22,7 +37,11 @@ namespace Rehub.BackendAPI
 
             builder.Configuration.AddEnvironmentVariables(prefix: "ReHub");
             // Add services to the container.
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -55,16 +74,13 @@ namespace Rehub.BackendAPI
             //builder.Services.AddScoped<DataContext, PostgresDbContext>();
             builder.Services.AddDbContext<PostgresDbContext>();
             builder.Services.RegisterRepositories();
-
-            // TODO manage CORS policies
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll",
-                    builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
-            });
+            builder.Services.RegisterUtilities();
 
             var app = builder.Build();
             MigrateDatabase(app);
+            app.UseStaticFiles();
+            app.UseCors(CORS_ALLOW_LOCALHOST);
+            app.UseRouting();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -78,7 +94,6 @@ namespace Rehub.BackendAPI
                 //});
             }
 
-            app.UseCors("AllowAll");
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -97,7 +112,6 @@ namespace Rehub.BackendAPI
             }
 
         }
-
         private static void MigrateDatabase(WebApplication app)
         {
             using (var scope = app.Services.CreateScope())

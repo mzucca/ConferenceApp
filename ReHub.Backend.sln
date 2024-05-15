@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{0775E416-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Utilities", "src\ReHub.Utilities\ReHub.Utilities.csproj", "{42583DC0-3CB8-4F06-8390-F30C7B6FF2F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReHub.Utilities.Tests", "tests\ReHub.Utilities.Tests\ReHub.Utilities.Tests.csproj", "{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Utilities.Tests", "tests\ReHub.Utilities.Tests\ReHub.Utilities.Tests.csproj", "{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rehub.Authorization", "src\Rehub.Authorization\Rehub.Authorization.csproj", "{A29F0A1F-8584-46DC-A828-4360E3BFD090}"
 EndProject

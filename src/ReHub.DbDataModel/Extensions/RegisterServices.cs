@@ -14,7 +14,10 @@ namespace ReHub.DbDataModel.Extensions
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IUserRepository<User>, UserRepository>();
+            services.AddScoped<IUserRepository<Doctor>, DoctorRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
             return services;
         }
     }

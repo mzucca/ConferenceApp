@@ -7,11 +7,8 @@ namespace ReHub.DbDataModel.Models;
 [Table("referrer_doctors")]
 [Index("Name", IsUnique = true)]
 [Index("ReferralCode", IsUnique = true)]
-public partial class ReferrerDoctor
+public partial class ReferrerDoctor : BaseReHubModel
 {
-    [Key]
-    [Column("id")]
-    public int Id { get; set; }
 
     [Column("name")]
     public string Name { get; set; } = null!;
@@ -21,12 +18,6 @@ public partial class ReferrerDoctor
 
     [Column("comment")]
     public string? Comment { get; set; }
-
-    [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
-
-    [Column("updated_at")]
-    public DateTime UpdatedAt { get; set; }
 
     //[InverseProperty("Referrer")]
     public virtual ICollection<Client> Clients { get; set; } = new List<Client>();
