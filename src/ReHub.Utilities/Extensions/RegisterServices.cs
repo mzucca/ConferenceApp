@@ -7,7 +7,7 @@ namespace ReHub.Utilities.Extensions
     {
         public static IServiceCollection RegisterUtilities(this IServiceCollection services)
         {
-            services.AddScoped<IBackgroundTaskQueue, MailSender>();
+            services.AddScoped<IMailSender, MailSender>();
             return services;
         }
     }

@@ -97,7 +97,7 @@ namespace BackendAPI.Controllers
         [Route("/rehub/appointments/create")]
         [Authorize]
         //[ValidateModelState]
-        public async Task<ActionResult<AppointmentPublic>> CreateOrJoinAppointment([FromServices] IBackgroundTaskQueue backgroundTasks)
+        public async Task<ActionResult<AppointmentPublic>> CreateOrJoinAppointment([FromServices] IMailSender mailSender)
         {
             //var client = await _clientRepository.GetByIdAsync(appointment.ClientId);
             //var doctor = await _doctorRepository.GetByIdAsync(appointment.DoctorId);

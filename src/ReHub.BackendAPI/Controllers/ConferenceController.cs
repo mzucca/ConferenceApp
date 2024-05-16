@@ -157,34 +157,34 @@ namespace ReHub.BackendAPI.Controllers
             return Ok(new ConferenceAction());
         }
 
-        [Route("ws")]
-        public async Task ConferenceWebSocketEndpoint()
-        {
-            //var wsManager = _serviceProvider.GetRequiredService<WSManager>();
-            //var context = HttpContext;
-            //var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-            //await wsManager.Connect(webSocket);
-            //Console.WriteLine($">>>>>>>>> WS {webSocket} connected");
+        //[Route("ws")]
+        //public async Task ConferenceWebSocketEndpoint()
+        //{
+        //    //var wsManager = _serviceProvider.GetRequiredService<WSManager>();
+        //    //var context = HttpContext;
+        //    //var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+        //    //await wsManager.Connect(webSocket);
+        //    //Console.WriteLine($">>>>>>>>> WS {webSocket} connected");
 
-            //try
-            //{
-            //    var buffer = new byte[1024 * 4];
-            //    while (webSocket.State == WebSocketState.Open)
-            //    {
-            //        var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            //        if (result.MessageType == WebSocketMessageType.Text)
-            //        {
-            //            var data = Encoding.UTF8.GetString(buffer, 0, result.Count);
-            //            Console.WriteLine($">>>>>>>>> Data received through WS: {data}");
-            //            await wsManager.Broadcast($"Hello from WebSocket. You wrote: {data}");
-            //        }
-            //    }
-            //}
-            //catch (WebSocketException)
-            //{
-            //    wsManager.Disconnect(webSocket);
-            //    Console.WriteLine($">>>>>>>>> WS {webSocket} disconnected");
-            //}
-        }
+        //    //try
+        //    //{
+        //    //    var buffer = new byte[1024 * 4];
+        //    //    while (webSocket.State == WebSocketState.Open)
+        //    //    {
+        //    //        var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+        //    //        if (result.MessageType == WebSocketMessageType.Text)
+        //    //        {
+        //    //            var data = Encoding.UTF8.GetString(buffer, 0, result.Count);
+        //    //            Console.WriteLine($">>>>>>>>> Data received through WS: {data}");
+        //    //            await wsManager.Broadcast($"Hello from WebSocket. You wrote: {data}");
+        //    //        }
+        //    //    }
+        //    //}
+        //    //catch (WebSocketException)
+        //    //{
+        //    //    wsManager.Disconnect(webSocket);
+        //    //    Console.WriteLine($">>>>>>>>> WS {webSocket} disconnected");
+        //    //}
+        //}
     }
 }
