@@ -36,3 +36,5 @@
 /src/ReHub.Frontend/bin/Debug/net8.0
 /src/Client/rehubapp/obj/Debug
 /src/Client/rehubapp
+/src/Rehub.CoreAdmin/bin/Debug/net8.0
+/src/Rehub.CoreAdmin/obj
