@@ -1,11 +1,12 @@
 # TODOs
 1. Create Appointments repository
-2. Add repository tests
+2. Add Signalr infra
 3. Add mail sender services
 4. Complete registration process
 5. Complete client registration
 6. Complete Doctor registration 
 3. Add Jwt Authentication Tests https://github.com/dotnet-labs/JwtAuthDemo/tree/main/webapi/JwtAuthDemo.IntegrationTests 
+2. Add repository tests
 4. Integrate Jwt in authentication API  (AuthAPI)
 
 FIx these warnings

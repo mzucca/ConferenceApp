@@ -23,4 +23,8 @@
     <ProjectReference Include="..\ReHub.Utilities\ReHub.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="templates\" />
+  </ItemGroup>
+
 </Project>

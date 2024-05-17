@@ -9,12 +9,12 @@ namespace ReHub.BackendAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ConferenceController : ControllerBase
+    public class ConferenceApiController : ControllerBase
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly ILogger<ConferenceController> _logger;
+        private readonly ILogger<ConferenceApiController> _logger;
 
-        public ConferenceController(IServiceProvider serviceProvider, ILogger<ConferenceController> logger)
+        public ConferenceApiController(IServiceProvider serviceProvider, ILogger<ConferenceApiController> logger)
         {
             _serviceProvider = serviceProvider;
             _logger = logger;

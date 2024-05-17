@@ -19,7 +19,6 @@ namespace Rehub.Authorization.Extensions
         }
         public static int GetUserId(this ClaimsPrincipal user)
         {
-            Object result;
             if (user == null) return -1;
             IdentityOptions options = new();
 

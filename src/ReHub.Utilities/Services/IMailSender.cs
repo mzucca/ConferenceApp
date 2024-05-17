@@ -5,9 +5,6 @@
     /// </summary>
     public interface IMailSender
     {
-        void SendTextMessage(string message,string to,string subject)
-        {
-
-        }
+        bool SendMessage(string message, string to, string subject);
     }
 }

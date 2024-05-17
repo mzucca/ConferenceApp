@@ -23,6 +23,10 @@
             /// </summary>
             public string ServerAddress { get; set; }
             /// <summary>
+            /// Ip Port of mail server
+            /// </summary>
+            public int ServerPort { get; set; }
+            /// <summary>
             /// Username for mail server authentication
             /// </summary>
             public string User { get; set; }

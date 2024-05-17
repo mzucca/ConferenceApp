@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MailKit.Security;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MimeKit.Text;
+using MimeKit;
 using ReHub.Utilities.Configuration;
+using MailKit.Net.Smtp;
 
 namespace ReHub.Utilities.Services
 {
@@ -16,6 +20,26 @@ namespace ReHub.Utilities.Services
 
             _mailSenderConfiguration = section.Get<MailSenderConfiguration>();
             _logger = logger;
+        }
+
+        public bool SendMessage(string message, string to, string subject)
+        {
+            // create message
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(_mailSenderConfiguration.FromAddress));
+            email.To.Add(MailboxAddress.Parse(to));
+            email.Subject = subject;
+            // TODO add message personalization
+            email.Body = new TextPart(TextFormat.Html) { Text = message };
+
+            // send email
+            using var smtp = new SmtpClient();
+            // TODO check if we need server port
+            smtp.Connect(_mailSenderConfiguration.MailServer.ServerAddress, 0, SecureSocketOptions.StartTls);
+            smtp.Authenticate(_mailSenderConfiguration.MailServer.User, _mailSenderConfiguration.MailServer.Password);
+            smtp.Send(email);
+            smtp.Disconnect(true);
+            return true;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace BackendAPI.Controllers
     /// 
     /// </summary>
     [ApiController]
-    public class AppointmentsController : ControllerBase
+    public class AppointmentsApiController : ControllerBase
     {
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IClientRepository _clientRepository;
@@ -22,16 +22,16 @@ namespace BackendAPI.Controllers
         private readonly INotificationRepository _notificationRepository;
         private readonly IUserService _userService;
 
-        private readonly ILogger<AppointmentsController> _logger;
+        private readonly ILogger<AppointmentsApiController> _logger;
 
 
-        public AppointmentsController(
+        public AppointmentsApiController(
             IAppointmentRepository appointmentRepository,
             IClientRepository clientRepository,
             IUserRepository<Doctor> doctorRepository,
             INotificationRepository notificationRepository,
             IUserService userService,
-            ILogger<AppointmentsController> logger)
+            ILogger<AppointmentsApiController> logger)
         {
             _appointmentRepository = appointmentRepository;
             _clientRepository = clientRepository;
