@@ -1,6 +1,8 @@
 ﻿using BackendAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rehub.Authorization.Extensions;
+using ReHub.BackendAPI.Exceptions;
 using ReHub.DbDataModel.Models;
 using ReHub.DbDataModel.Services;
 using System.ComponentModel.DataAnnotations;
@@ -11,11 +13,14 @@ namespace ReHub.BackendAPI.Controllers
     public class CustomersApiController : ControllerBase
     {
         private readonly IUserRepository<Doctor> _doctorsRepository;
-        private readonly IUserRepository<User> _usersRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly ILogger<CustomersApiController> _logger;
 
-        public CustomersApiController(IUserRepository<Doctor> repository,ILogger<CustomersApiController> logger)
+        public CustomersApiController(IUserRepository<Doctor> repository,
+            IClientRepository clientsRepository,
+            ILogger<CustomersApiController> logger)
         {
+            _clientRepository = clientsRepository;
             _doctorsRepository = repository;
             _logger = logger;
         }
@@ -59,23 +64,27 @@ namespace ReHub.BackendAPI.Controllers
         //[ValidateModelState]
         public virtual ActionResult<List<ClientWithDetailsOut>> ReadClientsWithDetails([FromQuery] int limit = 100, [FromQuery] int offset = 0)
         {
-            //if (currentUser.Type == UserType.Client)
-            //{
-            //    throw new ClientAccessDeniedException();
-            //}
-            //var clients = await _clientRepo.GetAll(limit, offset);
-            //var details = await _clientDetailsRepo.GetAll(limit, offset);
-            //var clientsWithDetails = new List<ClientWithDetailsOut>();
-            //for (int i = 0; i < clients.Count; i++)
-            //{
+            var userId = User.GetUserId();
+            var currentUser = _clientRepository.GetByID(userId);
+            
+            if (currentUser == null) throw new UserNotRegisteredException();
+            if (currentUser.Type == UserType.Client) throw new ClientAccessDeniedException();
+
+            //var details = _clientRepository.GetDetails(currentUser.Id);
+            var result = new List<ClientWithDetailsOut>();
+            var customers = _clientRepository.GetPaged(limit, offset);
+
+            foreach (var customer in customers)
+            {
+                var clientWithDetails = new ClientWithDetailsOut();
             //    var client = Client.FromOrm(clients[i]);
             //    var detail = ClientDetails.FromOrm(details[i]);
             //    clientsWithDetails.Add(ClientWithDetailsOut.ParseObj(new { client, details = detail }));
-            //}
-            //return Ok(clientsWithDetails);
-            return Ok(new List<ClientWithDetailsOut>());
-        }
 
+            }
+            return Ok(result);
+
+        }
         /// <summary>
         /// Update Client Details
         /// </summary>
@@ -131,7 +140,7 @@ namespace ReHub.BackendAPI.Controllers
         /// <response code="422">Validation Error</response>
         [HttpPost]
         [Route("/rehub/client/")]
-        //[ValidateModelState]
+        //[ValidateModelState
         public virtual ActionResult<ResultMessage> CreateClient([FromBody] ClientCreate body)
         {
             //var existingUser = await _userRepo.GetByEmail(client.Email);
@@ -166,7 +175,6 @@ namespace ReHub.BackendAPI.Controllers
             //return Ok(chartData);
             return Ok(new List<PainChartPoint>());
         }
-
         /// <summary>
         /// Get Client
         /// </summary>

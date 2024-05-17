@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ReHub.DbDataModel.Models;
 
 [Table("client_details")]
-public class ClientDetails
+public class ClientDetails : BaseReHubModel
 {
-    [Key]
-    public int Id { get; set; }
 
     [Required]
     public int ClientId { get; set; }
@@ -48,9 +46,4 @@ public class ClientDetails
 
     [MaxLength(16)]
     public string FiscalCode { get; set; }
-
-    public override string ToString()
-    {
-        return $"ClientDetails(id={Id})";
-    }
 }

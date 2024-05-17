@@ -76,6 +76,8 @@ namespace Rehub.BackendAPI
             builder.Services.RegisterRepositories();
             builder.Services.RegisterUtilities();
 
+            builder.Services.AddCoreAdmin();
+
             var app = builder.Build();
             MigrateDatabase(app);
             app.UseStaticFiles();
@@ -99,6 +101,12 @@ namespace Rehub.BackendAPI
 
             //Add support to logging request with SERILOG
             app.UseSerilogRequestLogging();
+
+            app.UseCoreAdminCustomTitle("Core Admin ReHub App");
+
+            // Required for Core Admin
+            app.MapDefaultControllerRoute();
+
 
             app.MapControllers();
             app.Logger.LogInformation("Starting ReHub backend server");

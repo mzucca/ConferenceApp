@@ -2,6 +2,7 @@
 using ReHub.Db.PostgreSQL;
 using ReHub.DbDataModel.Extensions;
 using ReHub.DbDataModel.Models;
+using ReHub.DbDataModel.Extensions;
 
 namespace ReHub.DbDataModel.Services
 {
@@ -10,39 +11,14 @@ namespace ReHub.DbDataModel.Services
         public ClientRepository(PostgresDbContext dataContext, ILogger<ClientRepository> logger): base(dataContext, logger) 
         { 
         }
-        public Client? GetByEMail(string email) => _datacontext.GetUserByEmail<Client>(email);
-        #region IRepository
+        public Client? GetByEMail(string email) => _dataContext.GetUserByEmail<Client>(email);
 
-        public void Delete(int entityId)
+
+        #region IClientRepository
+        public ClientDetails GetDetails(int customerId)
         {
-            throw new NotImplementedException();
+            return _dataContext.GetById<ClientDetails>(customerId);
         }
-
-
-
-        public Client GetByID(int entityId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(Client entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Client entity)
-        {
-            throw new NotImplementedException();
-        }
-        public void Dispose()
-        {
-            
-        }
-#endregion
+        #endregion
     }
 }

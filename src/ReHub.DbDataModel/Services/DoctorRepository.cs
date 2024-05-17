@@ -12,7 +12,7 @@ namespace ReHub.DbDataModel.Services
             logger.LogDebug("Creating doctor repository");
         }
 
-        public Doctor? GetByEMail(string email) => _datacontext.GetUserByEmail<Doctor>(email);
+        public Doctor? GetByEMail(string email) => _dataContext.GetUserByEmail<Doctor>(email);
 
     }
 }

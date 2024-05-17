@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Utilities.Tests", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rehub.Authorization", "src\Rehub.Authorization\Rehub.Authorization.csproj", "{A29F0A1F-8584-46DC-A828-4360E3BFD090}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rehub.CoreAdmin", "src\Rehub.CoreAdmin\Rehub.CoreAdmin.csproj", "{9506F610-4DEE-4B1A-96FF-A8675B4838F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

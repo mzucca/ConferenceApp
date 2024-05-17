@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rehub.Authorization\Rehub.Authorization.csproj" />
+    <ProjectReference Include="..\Rehub.CoreAdmin\Rehub.CoreAdmin.csproj" />
     <ProjectReference Include="..\ReHub.Utilities\ReHub.Utilities.csproj" />
   </ItemGroup>
 

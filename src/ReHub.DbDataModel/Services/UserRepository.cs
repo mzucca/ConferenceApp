@@ -16,7 +16,7 @@ namespace ReHub.DbDataModel.Services
             _provider = new GenerateEncryptionProvider("rehub_encrypt_key", EncryptionAlgorithm.Aes);
 
         }
-        public User? GetByEMail(string email) => _datacontext.GetUserByEmail<User>(email);
+        public User? GetByEMail(string email) => _dataContext.GetUserByEmail<User>(email);
 
     }
 }

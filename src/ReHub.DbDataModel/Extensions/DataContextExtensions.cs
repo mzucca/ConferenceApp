@@ -12,7 +12,7 @@ namespace ReHub.DbDataModel.Extensions
         /// <param name="dataContext"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static T? GetUserByEmail<T>(this DataContext dataContext, string email) where T : User
+        public static T? GetUserByEmail<T>(this PostgresDbContext dataContext, string email) where T : User
         {
             var users = dataContext.Set<T>();
             if (users == null) return null;
@@ -26,12 +26,12 @@ namespace ReHub.DbDataModel.Extensions
         /// <param name="dataContext"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static T? GetById<T>(this DataContext dataContext, int id) where T : BaseReHubModel
+        public static T? GetById<T>(this PostgresDbContext dataContext, int id) where T : BaseReHubModel
         {
-            var users = dataContext.Set<T>();
-            if (users == null) return null;
+            var entities = dataContext.Set<T>();
+            if (entities == null) return null;
 
-            return users.FirstOrDefault<T>(u => u.Id == id);
+            return entities.FirstOrDefault<T>(u => u.Id == id);
 
         }
     }
