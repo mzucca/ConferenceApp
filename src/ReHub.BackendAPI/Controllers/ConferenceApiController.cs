@@ -1,9 +1,6 @@
-﻿using BackendAPI.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
+using ReHub.BackendAPI.Models;
 using ReHub.DbDataModel.Models;
-using System.Net.WebSockets;
-using System.Text;
 
 namespace ReHub.BackendAPI.Controllers
 {

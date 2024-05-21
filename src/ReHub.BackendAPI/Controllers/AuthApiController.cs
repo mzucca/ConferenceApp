@@ -2,14 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
-using BackendAPI.Models;
-using System.Security.Claims;
 using ReHub.BackendAPI.Models;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Rehub.Authorization.Services;
 
 
-namespace BackendAPI.Controllers
+namespace ReHub.BackendAPI.Controllers
 {
     /// <summary>
     /// 
@@ -114,10 +113,10 @@ namespace BackendAPI.Controllers
         [Route("/rehub/verify-token")]
         [Authorize]
         //[ValidateModelState]
-         public virtual IActionResult VerifyToken([FromBody] Token body)
+         public virtual ActionResult<TokenVerify> VerifyToken([FromBody] Token body)
         {
-            //if (User == null)
-            //    return Ok(new TokenVerify { IsValid = false });
+            if (User == null)
+                return Ok(new TokenVerify { IsValid = false });
 
             return Ok(new TokenVerify { IsValid=true});
         }

@@ -1,7 +1,6 @@
-﻿using BackendAPI.Controllers;
-using BackendAPI.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReHub.BackendAPI.Models;
 using ReHub.DbDataModel.Models;
 using ReHub.DbDataModel.Services;
 using System.ComponentModel.DataAnnotations;

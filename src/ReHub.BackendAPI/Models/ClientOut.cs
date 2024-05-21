@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using ReHub.DbDataModel.Models;
 using System.Text.Json.Serialization;
 
-namespace BackendAPI.Models
+namespace ReHub.BackendAPI.Models
 {
     /// <summary>
     /// 

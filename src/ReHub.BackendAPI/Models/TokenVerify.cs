@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using System.Runtime.Serialization;
 
-namespace BackendAPI.Models
+namespace ReHub.BackendAPI.Models
 {
     /// <summary>
     /// 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace BackendAPI.Models
+namespace ReHub.BackendAPI.Models
 {
     /// <summary>
     /// 

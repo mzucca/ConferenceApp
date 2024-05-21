@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReHub.BackendAPI.Models;
 using ReHub.Db.PostgreSQL;
 
-namespace BackendAPI.Controllers
+namespace ReHub.BackendAPI.Controllers
 {
     /// <summary>
     /// 

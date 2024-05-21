@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-using BackendAPI.Models;
 using Microsoft.AspNetCore.Authorization;
+using ReHub.BackendAPI.Models;
 
-namespace BackendAPI.Controllers
+namespace ReHub.BackendAPI.Controllers
 {
     /// <summary>
     /// 

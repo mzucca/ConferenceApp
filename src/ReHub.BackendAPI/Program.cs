@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using ReHub.BackendAPI.Extensions;
 
-namespace Rehub.BackendAPI
+namespace ReHub.BackendAPI
 {
     public class Program
     {
@@ -37,6 +38,7 @@ namespace Rehub.BackendAPI
 
             builder.Configuration.AddEnvironmentVariables(prefix: "ReHub");
             // Add services to the container.
+            builder.Services.ConfigureLocalization();
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -75,7 +77,6 @@ namespace Rehub.BackendAPI
             builder.Services.AddDbContext<PostgresDbContext>();
             builder.Services.RegisterRepositories();
             builder.Services.RegisterUtilities();
-
             builder.Services.AddCoreAdmin();
 
             var app = builder.Build();
@@ -83,6 +84,8 @@ namespace Rehub.BackendAPI
             app.UseStaticFiles();
             app.UseCors(CORS_ALLOW_LOCALHOST);
             app.UseRouting();
+
+            app.ConfigureLocalization();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

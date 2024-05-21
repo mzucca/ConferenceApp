@@ -15,7 +15,7 @@ public partial class NotificationRecipient : BaseReHubModel
     public int UserId { get; set; }
 
     [Column("user_seen")]
-    public bool? UserSeen { get; set; }
+    public bool UserSeen { get; set; } = false;
 
     [ForeignKey("NotificationId")]
     //[InverseProperty("NotificationRecipients")]

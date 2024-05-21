@@ -1,12 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
-using BackendAPI.Models;
 using ReHub.DbDataModel.Services;
 using Rehub.Authorization.Extensions;
 using ReHub.DbDataModel.Models;
+using ReHub.BackendAPI.Models;
+using ReHub.BackendAPI.Extensions;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
+using System.Globalization;
 
-namespace BackendAPI.Controllers
+namespace ReHub.BackendAPI.Controllers
 {
     /// <summary>
     /// 
@@ -14,13 +19,29 @@ namespace BackendAPI.Controllers
     [ApiController]
     public class UsersApiController : ControllerBase
     {
-        private readonly IUserRepository<User> _repository;
+        private readonly IUserRepository<User> _userRepository;
+        private readonly INotificationRepository _notificationRepository;
+        private readonly IStringLocalizer<UsersApiController> _localizer;
+        private readonly RequestLocalizationOptions _localizationOptions;
         private readonly ILogger<UsersApiController> _logger;
 
-        public UsersApiController(IUserRepository<User> repository,ILogger<UsersApiController> logger)
+
+        public UsersApiController(IUserRepository<User> repository,
+            INotificationRepository notificationRepository,
+            IStringLocalizer<UsersApiController> localizer,
+            IOptions<RequestLocalizationOptions> localizationOptions,
+            ILogger<UsersApiController> logger)
         {
-            _repository = repository;
+            _userRepository = repository;
+            _notificationRepository = notificationRepository;
+            _localizer = localizer;
+            _localizationOptions = localizationOptions.Value;
             _logger = logger;
+
+            if (_localizationOptions == null)
+            {
+                _logger.LogWarning("localization options is null");
+            }
         }
 
         /// <summary>
@@ -62,7 +83,7 @@ namespace BackendAPI.Controllers
         [Authorize]
         //[ValidateModelState]
         [Authorize]
-        public virtual IActionResult GetMe()
+        public virtual ActionResult<UserOut> GetMe()
         {
             _logger.LogDebug("Entering GetMe action");
             if(User == null)
@@ -76,7 +97,7 @@ namespace BackendAPI.Controllers
                 _logger.LogError("Invalid token");
                 return Unauthorized();
             }
-            var user = _repository.GetByID(id);
+            var user = _userRepository.GetByID(id);
             if(user==null)
             {
                 _logger.LogError($"User '{id}' not found");
@@ -99,6 +120,29 @@ namespace BackendAPI.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("/rehub/set-culture")]
+        public ActionResult<ResultMessage> SetCulture(string culture)
+        {
+            var supportedCulture = _localizationOptions.SupportedCultures.Where(c=>c.Name.ToLower()==culture.ToLower() || c.TwoLetterISOLanguageName.ToLower() == culture.ToLower()).FirstOrDefault();
+            if(supportedCulture==null)
+            {
+                var errormessage = $"The culture {culture} is not supported. Cannot change default culture";
+                _logger.LogWarning(errormessage);
+                return Ok(new ResultMessage { Message = errormessage, Type = ResultMessageType.Error, Value = culture });
+            }
+            // Found a valid culture
+            CultureInfo.CurrentCulture = supportedCulture;
+
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(supportedCulture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(30) }
+            );
+            var template = _localizer["LanguageChangedResult"];
+            var message = string.Format(template,culture);
+            return Ok(new ResultMessage { Message=message, Type=ResultMessageType.Success, Value=culture});
+        }
         /// <summary>
         /// Get My Notifications
         /// </summary>
@@ -110,9 +154,13 @@ namespace BackendAPI.Controllers
         [Route("/rehub/my-notifications")]
         [Authorize]
         //[ValidateModelState]
-        public virtual IActionResult GetMyNotifications([FromQuery]int limit, [FromQuery]int offset)
+        public virtual ActionResult<List<NotificationOut>> GetMyNotifications([FromQuery]int limit, [FromQuery]int offset)
         {
-            return Ok();
+            _logger.LogDebug($"Entering GetMyNotifications with limit={limit} and offset={offset}");
+            var id = User.GetUserId();
+            var notifications = _notificationRepository.GetUserNotifications(id,limit, offset);
+            var result = notifications.GetNotificationOuts();
+            return Ok(result);
         }
     }
 }
