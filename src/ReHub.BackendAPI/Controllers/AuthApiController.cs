@@ -136,7 +136,9 @@ namespace ReHub.BackendAPI.Controllers
                 _logger.LogError("User and room cannot be null");
                 return Ok(null);
             }
-            var token = TokenUtils.CreateLiveKitToken(user, room);
+            var r = new Random();
+            int i = r.Next(1,10);
+            var token = TokenUtils.CreateLiveKitToken(user+i, room);
             return Ok(new LivekitToken { Token=token, Url= "wss://marioz-test-geie7rrs.livekit.cloud" });
         }
 
