@@ -6,6 +6,7 @@ using ReHub.BackendAPI.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Rehub.Authorization.Services;
+using ReHub.Utilities.Extensions;
 
 
 namespace ReHub.BackendAPI.Controllers
@@ -120,5 +121,25 @@ namespace ReHub.BackendAPI.Controllers
 
             return Ok(new TokenVerify { IsValid=true});
         }
+        /// <summary>
+        /// Verify Token
+        /// </summary>
+        /// <param name="body"></param>
+        /// <response code="200">Successful Response</response>
+        /// <response code="422">Validation Error</response>
+        [HttpGet]
+        [Route("/rehub/get_livekit-token")]
+        public virtual ActionResult<LivekitToken> GetLivekitToken(string user, string room)
+        {
+            if(string.IsNullOrEmpty(user) || string.IsNullOrEmpty(room))
+            {
+                _logger.LogError("User and room cannot be null");
+                return Ok(null);
+            }
+            var token = TokenUtils.CreateLiveKitToken(user, room);
+            return Ok(new LivekitToken { Token=token, Url= "wss://marioz-test-geie7rrs.livekit.cloud" });
+        }
+
+
     }
 }

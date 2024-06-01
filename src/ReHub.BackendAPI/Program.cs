@@ -25,10 +25,10 @@ namespace ReHub.BackendAPI
                 builder =>
                 {
                     builder
-                    .WithOrigins("http://localhost:9000")
+                    .AllowAnyOrigin() //.WithOrigins("http://localhost:3000")
                     .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
+                    .AllowAnyHeader();
+                    //.AllowCredentials();
                 });
             });
 
