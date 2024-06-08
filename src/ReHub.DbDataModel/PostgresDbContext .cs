@@ -26,7 +26,7 @@ namespace ReHub.Db.PostgreSQL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = _configuration[":DbConfiguration:ConnectionString"]; ;
+            var connectionString = _dbConfiguration.ConnectionString;
             //_logger.LogInformation($"Creating a PostgreSQL connection using:'{connectionString}'");
             optionsBuilder.UseNpgsql(connectionString,
                 b => b.MigrationsAssembly("ReHub.DbDataModel"));
