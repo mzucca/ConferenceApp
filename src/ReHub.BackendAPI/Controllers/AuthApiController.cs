@@ -129,8 +129,10 @@ namespace ReHub.BackendAPI.Controllers
         /// <response code="422">Validation Error</response>
         [HttpGet]
         [Route("/rehub/get_livekit-token")]
-        public virtual ActionResult<LivekitToken> GetLivekitToken(string user, string room)
+        public virtual ActionResult<LivekitToken> GetLivekitToken(string room)
         {
+            // TODO user must be current user
+            string user = "marioZ";
             if(string.IsNullOrEmpty(user) || string.IsNullOrEmpty(room))
             {
                 _logger.LogError("User and room cannot be null");

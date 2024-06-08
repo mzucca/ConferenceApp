@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
+using ReHub.DbDataModel.Enums;
+using ReHub.Utilities.Extensions;
 
 namespace ReHub.BackendAPI.Controllers
 {
@@ -113,11 +115,26 @@ namespace ReHub.BackendAPI.Controllers
         /// <response code="200">Successful Response</response>
         [HttpGet]
         [Route("/rehub/my-appointments")]
-        [Authorize]
+        //[Authorize]
         //[ValidateModelState]
-        public virtual IActionResult GetMyAppointments()
+        public virtual ActionResult<List<AppointmentPublic>> GetMyAppointments()
         {
-            return Ok();
+            var result = new List<AppointmentPublic>();
+            result.Add(new AppointmentPublic {
+                Id = 1,
+                Name = "Session01",
+                Date = DateTime.UtcNow,
+                Status = AppointmentStatusType.Active,
+                District = District.Hip
+            });
+            result.Add(new AppointmentPublic {
+                Id=2,
+                Name="Session02",
+                Date = DateTime.UtcNow,
+                Status = AppointmentStatusType.Active,
+                District=District.Knee
+            });
+            return Ok(result);
         }
 
         [HttpPost]

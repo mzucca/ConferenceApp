@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rehub.Authorization.Services;
 using ReHub.BackendAPI.Models;
+using ReHub.DbDataModel.Enums;
 using ReHub.DbDataModel.Models;
 using ReHub.DbDataModel.Services;
+using ReHub.Utilities.Extensions;
 using ReHub.Utilities.Services;
 using System.ComponentModel.DataAnnotations;
 
@@ -166,7 +168,6 @@ namespace ReHub.BackendAPI.Controllers
                 Speaker = null, //existingAppointment.Speaker,
                 Status = AppointmentStatusType.Pending,
                 Date = DateTime.UtcNow, //existingAppointment.Date,
-                Time = DateTime.UtcNow, //existingAppointment.Time,
                 MaxListeners = 8 // existingAppointment.MaxListeners
             });
         }
@@ -201,9 +202,9 @@ namespace ReHub.BackendAPI.Controllers
         /// <response code="422">Validation Error</response>
         [HttpGet]
         [Route("/rehub/appointments/{appointment_id}")]
-        [Authorize]
+        //[Authorize]
         //[ValidateModelState]
-        public async Task<ActionResult<AppointmentPublic>> GetAppointmentById(int appointmentId)
+        public async Task<ActionResult<AppointmentPublic>> GetAppointmentById(int appointment_id)
         {
             //var currentUser = await _userService.GetCurrentUserAsync();
             //var appointment = await _appointmentRepository.GetAsync(appointmentId);
@@ -228,9 +229,16 @@ namespace ReHub.BackendAPI.Controllers
             //        MaxListeners = appointment.MaxListeners
             //    });
             //}
-
+            var result = new AppointmentPublic
+            {
+                Id = appointment_id,
+                Name = "Session01",
+                Date = DateTime.UtcNow,
+                Status = AppointmentStatusType.Active,
+                District = District.Hip
+            };
             //return Ok(appointment);
-            return Ok(new AppointmentPublic());
+            return Ok(result);
         }
 
         /// <summary>
