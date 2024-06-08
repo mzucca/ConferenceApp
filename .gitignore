@@ -38,3 +38,4 @@
 /src/Client/rehubapp
 /src/Rehub.CoreAdmin/bin/Debug/net8.0
 /src/Rehub.CoreAdmin/obj
+/frontend/node_modules
