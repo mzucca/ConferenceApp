@@ -1,30 +1,26 @@
-import { Button, Item, Label, Segment } from "semantic-ui-react";
-import { useStore } from "../../../app/stores/store";
-import { Activity } from "../../../app/models/activity";
-import { Link } from "react-router-dom";
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
+import { Fragment } from 'react';
+import { Header } from "semantic-ui-react";
+import { useStore } from '../../../app/stores/store';
+import ActivityListItem from './ActivityListItem';
 
+export default observer(function ActivityList() {
+    const { activityStore } = useStore();
+    const { groupedActivities } = activityStore;
 
-export default observer(function ActivityList(){
-    const {activityStore} = useStore();
-    const{activitiesByDate,loading}=activityStore;
     return (
-        <Segment>
-            <Item.Group divided>
-                {activityStore.activitiesByDate.map((activity: Activity) => (
-                    <Item key={activity.id}>
-                        <Item.Content>
-                            <Item.Header as='a'>{activity.name}</Item.Header>
-                            <Item.Meta>{activity.date}</Item.Meta>
-                            <Item.Extra>
-                                <Button as={Link} to={`/sessions/${activity.name}`} floated="right" content="Join" color='blue' />
-                                <Label basic content={activity.district} />
-                            </Item.Extra>
-                        </Item.Content>
+        <>
+            {groupedActivities.map(([group, activities]) => (
+                <Fragment key={group}>
+                    <Header sub color='teal'>
+                        {group}
+                    </Header>
+                    {activities && activities.map(activity => (
+                        <ActivityListItem key={activity.id} activity={activity} />
+                    ))}
+                </Fragment>
+            ))}
+        </>
 
-                    </Item>
-                ))}
-            </Item.Group>
-        </Segment>
     )
 })

@@ -26,8 +26,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rehub.Authorization", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rehub.CoreAdmin", "src\Rehub.CoreAdmin\Rehub.CoreAdmin.csproj", "{9506F610-4DEE-4B1A-96FF-A8675B4838F3}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "rehub.frontend", "rehub.frontend.react\rehub.frontend.esproj", "{3CB0162A-90D0-42E9-8DA3-1A7DC4755BC7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,12 +64,6 @@ Global
 		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CB0162A-90D0-42E9-8DA3-1A7DC4755BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CB0162A-90D0-42E9-8DA3-1A7DC4755BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CB0162A-90D0-42E9-8DA3-1A7DC4755BC7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{3CB0162A-90D0-42E9-8DA3-1A7DC4755BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CB0162A-90D0-42E9-8DA3-1A7DC4755BC7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CB0162A-90D0-42E9-8DA3-1A7DC4755BC7}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

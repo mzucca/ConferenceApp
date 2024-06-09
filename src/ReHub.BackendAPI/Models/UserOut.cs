@@ -36,14 +36,14 @@ namespace ReHub.BackendAPI.Models
         /// </summary>
         [Required]
         [JsonPropertyName("name")]
-        public Object Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or Sets Surname
         /// </summary>
         [Required]
         [JsonPropertyName("surname")]
-        public Object Surname { get; set; }
+        public string Surname { get; set; }
 
         /// <summary>
         /// Gets or Sets Gender
@@ -70,7 +70,7 @@ namespace ReHub.BackendAPI.Models
         /// </summary>
         [Required]
         [JsonPropertyName("is_verified")]
-        public Object IsVerified { get; set; }
+        public bool IsVerified { get; set; }
         /// <summary>
         /// Gets or Sets Id
         /// </summary>

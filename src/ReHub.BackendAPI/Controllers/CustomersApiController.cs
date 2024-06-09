@@ -133,15 +133,15 @@ namespace ReHub.BackendAPI.Controllers
         }
 
         /// <summary>
-        /// Create Client
+        /// Create a new Client
         /// </summary>
         /// <param name="body"></param>
         /// <response code="200">Successful Response</response>
         /// <response code="422">Validation Error</response>
         [HttpPost]
-        [Route("/rehub/client/")]
+        [Route("/rehub/register/")]
         //[ValidateModelState
-        public virtual ActionResult<ResultMessage> CreateClient([FromBody] ClientCreate body)
+        public virtual ActionResult<ResultMessage> Register([FromBody] ClientCreate body)
         {
             //var existingUser = await _userRepo.GetByEmail(client.Email);
             //if (existingUser != null)

@@ -62,8 +62,8 @@ namespace ReHub.BackendAPI.Models
         /// <summary>
         /// Gets or Sets Rc
         /// </summary>
-
+        //TODO what is RC ????
         [JsonPropertyName("rc")]
-        public Object Rc { get; set; }
+        public string Rc { get; set; }
     }
 }
