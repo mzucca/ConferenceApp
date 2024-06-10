@@ -4,16 +4,18 @@ import { Link } from 'react-router-dom';
 import { Button, Container, Header, Segment, Image } from "semantic-ui-react";
 import { useStore } from '../../app/stores/store';
 import LoginForm from '../users/LoginForm';
-import RegsiterForm from '../users/RegsiterForm';
+import RegisterForm from '../users/RegisterForm';
+import { useTranslation } from 'react-i18next';
 
 export default observer(function HomePage() {
     const { userStore, modalStore } = useStore();
+    const { t } = useTranslation();
     return (
         <Segment inverted textAlign='center' vertical className='masthead' >
             <Container text>
                 <Header as='h1' inverted>
                     <Image size='massive' src='/assets/logo.png' alt='logo' style={{ marginBottom: 12 }} />
-                    RiHub
+                    {t('welcome')}
                 </Header>
                 {userStore.isLoggedIn ? (
                     <>
@@ -24,14 +26,13 @@ export default observer(function HomePage() {
                     </>
                 ) : (
                     <>
-                        <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted>
-                            Login!
+                        <Button primary onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted>
+                            {t('login')}
                         </Button>
-                        <Button onClick={() => modalStore.openModal(<RegsiterForm />)} size='huge' inverted>
-                            Register
+                        <Button secondary onClick={() => modalStore.openModal(<RegisterForm />)} size='huge' inverted>
+                            {t('register')}
                         </Button>
                     </>
-
                 )}
             </Container>
         </Segment>

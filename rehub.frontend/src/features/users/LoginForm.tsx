@@ -3,9 +3,11 @@ import { observer } from "mobx-react-lite";
 import { Button, Header, Label } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/stores/store";
+import { useTranslation } from 'react-i18next';
 
 export default observer(function LoginForm() {
     const { userStore } = useStore();
+    const { t } = useTranslation();
     return (
         <Formik
             initialValues={{ email: '', password: '', error: null }}

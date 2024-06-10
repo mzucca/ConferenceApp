@@ -3,12 +3,17 @@ import { Link } from "react-router-dom";
 import { Item, Button, Icon, Segment, Label } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 import ActivityListItemAttendee from "./ActivityListItemAttendee";
+import { useTranslation } from "react-i18next";
 
+// TODO Date Handling
+// https://dev.to/ekeijl/react-automatic-date-formatting-in-translations-i18next-date-fns-8df
 interface Props {
     activity: Activity
 }
 
 export default function ActivityListItem({ activity }: Props) {
+    const { t } = useTranslation();
+    
     return (
         <Segment.Group>
             <Segment>
@@ -57,14 +62,14 @@ export default function ActivityListItem({ activity }: Props) {
                     to={`/sessions/${activity.id}`}
                     color='blue'
                     floated='right'
-                    content='Join'
+                    content={t('join')}
                 />
                 <Button
                     as={Link}
                     to={`/activities/${activity.id}`}
                     color='teal'
                     floated='right'
-                    content='View'
+                    content={t('view')}
                 />
             </Segment>
         </Segment.Group>

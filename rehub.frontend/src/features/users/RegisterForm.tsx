@@ -6,7 +6,7 @@ import { useStore } from "../../app/stores/store";
 import * as Yup from 'yup';
 import ValidationError from "../errors/ValidationError";
 
-export default observer(function RegsiterForm() {
+export default observer(function RegisterForm() {
     const { userStore } = useStore();
     return (
         <Formik
@@ -22,7 +22,7 @@ export default observer(function RegsiterForm() {
         >
             {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                 <Form className='ui form error' onSubmit={handleSubmit} autoComplete='off'>
-                    <Header as='h2' content='Sign up to Reactivities' color="teal" textAlign="center" />
+                    <Header as='h2' content='Sign up to Rihub' color="teal" textAlign="center" />
                     <MyTextInput placeholder="Display Name" name='displayName' />
                     <MyTextInput placeholder="Username" name='username' />
                     <MyTextInput placeholder="Email" name='email' />
