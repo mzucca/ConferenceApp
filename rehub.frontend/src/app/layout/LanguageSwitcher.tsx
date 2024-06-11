@@ -18,7 +18,7 @@ export default function RegisterForm() {
     }
 
     return(
-        <Dropdown  pointing='top left' icon='globe'>
+        <Dropdown  pointing='top right' icon='globe'>
             <Dropdown.Menu>
                 {languages.map((lang) => (
                     <Dropdown.Item 

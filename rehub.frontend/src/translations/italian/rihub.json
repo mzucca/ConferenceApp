@@ -1,4 +1,13 @@
 {
+    "longDate":"{{date,short}}",
+    "onlyDate":"{{date,PP}}",
+    "chatEventTitle" :"Chatta su questo evento",
+    "hostedBy": "Gestita da",
+    "cancelAttendance": "Annulla prenotazione",
+    "one_attendant": "1 Partecipante",
+    "more_attendant": "{{people}} Partecipanti",
+    "book_session" : "Prenota Sessione",
+    "doctor": "Dottore",
     "sessions": "Sessioni",
     "errors": "Errori",
     "join": "Collegati",

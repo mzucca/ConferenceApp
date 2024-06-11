@@ -6,6 +6,7 @@ import { Segment, Header, Comment, Loader } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import * as Yup from 'yup';
 import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     activityId: string;
@@ -22,7 +23,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
             commentStore.clearComments();
         }
     }, [commentStore, activityId]);
-
+    const {t} = useTranslation();
     return (
         <>
             <Segment
@@ -32,7 +33,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                 color='teal'
                 style={{ border: 'none' }}
             >
-                <Header>Chat about this event</Header>
+                <Header>{t('chatEventTitle')}</Header>
             </Segment>
             <Segment attached clearing>
                 <Formik

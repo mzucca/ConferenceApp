@@ -5,8 +5,6 @@ import { Activity } from "../../../app/models/activity";
 import ActivityListItemAttendee from "./ActivityListItemAttendee";
 import { useTranslation } from "react-i18next";
 
-// TODO Date Handling
-// https://dev.to/ekeijl/react-automatic-date-formatting-in-translations-i18next-date-fns-8df
 interface Props {
     activity: Activity
 }
@@ -48,7 +46,7 @@ export default function ActivityListItem({ activity }: Props) {
             </Segment>
             <Segment>
                 <span>
-                    <Icon name='clock' /> {format(activity.date!, 'dd MMM yyyy h:mm aa')}
+                    <Icon name='clock' /> {t('longDate', { date: activity.date })}
                     <Icon name='marker' /> {activity.venue}
                 </span>
             </Segment>

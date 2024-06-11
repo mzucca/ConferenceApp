@@ -1,10 +1,9 @@
-import { format } from 'date-fns';
 import { observer } from 'mobx-react-lite';
-import React from 'react'
 import { Link } from 'react-router-dom';
 import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react'
 import { Activity } from "../../../app/models/activity";
 import { useStore } from '../../../app/stores/store';
+import { useTranslation } from 'react-i18next';
 
 const activityImageStyle = {
     filter: 'brightness(30%)'
@@ -25,6 +24,7 @@ interface Props {
 
 export default observer(function ActivityDetailedHeader({ activity }: Props) {
     const { activityStore: { updateAttendeance, loading, cancelActivityToggle } } = useStore();
+    const {t} = useTranslation();
     return (
         <Segment.Group>
             <Segment basic attached='top' style={{ padding: '0' }}>
@@ -41,9 +41,9 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                                     content={activity.title}
                                     style={{ color: 'white' }}
                                 />
-                                <p>{format(activity.date!, 'dd MMM yyyy')}</p>
+                                <p>{t('onlyDate',{date:activity.date})}</p>
                                 <p>
-                                    Hosted by <strong><Link to={`/profiles/${activity.hostUsername}`}>{activity.hostUsername}</Link></strong>
+                                    {t('hostedBy')} <strong><Link to={`/profiles/${activity.hostUsername}`}>{activity.hostUsername}</Link></strong>
                                 </p>
                             </Item.Content>
                         </Item>
@@ -74,10 +74,10 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
 
                 ) : activity.isGoing ? (
                     <Button onClick={updateAttendeance} 
-                        loading={loading}>Cancel attendance</Button>
+                        loading={loading}>{t('cancelAttendance')}</Button>
                 ) : (
                     <Button disabled={activity.isCancelled} onClick={updateAttendeance} 
-                        loading={loading} color='teal'>Join Activity</Button>
+                        loading={loading} color='teal'>{t('book_session')}</Button>
                 )}
             </Segment>
         </Segment.Group>

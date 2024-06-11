@@ -2,13 +2,19 @@ import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { Activity } from '../../../app/models/activity'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
     activity: Activity
 }
 
 export default observer(function ActivityDetailedSidebar ({activity: {attendees, host}}: Props) {
+    
+    const {t} = useTranslation();
+
     if (!attendees) return null;
+
+
     return (
         <>
             <Segment
@@ -19,7 +25,7 @@ export default observer(function ActivityDetailedSidebar ({activity: {attendees,
                 inverted
                 color='teal'
             >
-                {attendees.length} {attendees.length === 1 ? 'Person' : 'People'} going
+               {attendees.length === 1 ? t('one_attendant') : t('more_attendant', {people : attendees.length})}
             </Segment>
             <Segment attached>
                 <List relaxed divided>
@@ -31,7 +37,7 @@ export default observer(function ActivityDetailedSidebar ({activity: {attendees,
                                 color='orange'
                                 ribbon='right'
                             >
-                                Host
+                                {t('doctor')}
                             </Label>}
                             <Image size='tiny' src={'/assets/user.png'} />
                             <Item.Content verticalAlign='middle'>

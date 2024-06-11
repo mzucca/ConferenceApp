@@ -1,4 +1,13 @@
 {
+    "longDate":"{{date,short}}",
+    "onlyDate":"{{date,PP}}",
+    "doctor": "Doctor",
+    "hostedBy": "Hosted by",
+    "cancelAttendance": "Cancel attendance",
+    "one_attendant": "one person going",
+    "more_attendant": "{{people}} people going",
+    "book_session" : "Book Session",
+    "chatEventTitle" :"Chat about this event",
     "sessions": "Sessions",
     "errors": "Errors",
     "join": "Join",
