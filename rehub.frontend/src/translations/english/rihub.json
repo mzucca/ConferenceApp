@@ -3,6 +3,8 @@
     "onlyDate":"{{date,PP}}",
     "doctor": "Doctor",
     "hostedBy": "Hosted by",
+    "sessionBooked":"Session booked",
+    "doctorHosting":"You are the owner of this activity!",
     "cancelAttendance": "Cancel attendance",
     "one_attendant": "one person going",
     "more_attendant": "{{people}} people going",

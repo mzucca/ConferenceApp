@@ -4,6 +4,8 @@
     "chatEventTitle" :"Chatta su questo evento",
     "hostedBy": "Gestita da",
     "cancelAttendance": "Annulla prenotazione",
+    "doctorHosting":"Sei l'owner dell'evento",
+    "sessionBooked":"Sessione prenotata",
     "one_attendant": "1 Partecipante",
     "more_attendant": "{{people}} Partecipanti",
     "book_session" : "Prenota Sessione",

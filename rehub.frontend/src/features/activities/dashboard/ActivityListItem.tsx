@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { Item, Button, Icon, Segment, Label } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
@@ -29,14 +28,14 @@ export default function ActivityListItem({ activity }: Props) {
                             {activity.isHost && (
                                 <Item.Description>
                                     <Label basic color='orange'>
-                                        You are hosting this activity!
+                                        {t('doctorHosting')}
                                     </Label>
                                 </Item.Description>
                             )}
                             {activity.isGoing && !activity.isHost && (
                                 <Item.Description>
                                     <Label basic color='green'>
-                                        You are going to this activity!
+                                       {t('sessionBooked')}
                                     </Label>
                                 </Item.Description>
                             )}
@@ -58,6 +57,7 @@ export default function ActivityListItem({ activity }: Props) {
                 <Button
                     as={Link}
                     to={`/sessions/${activity.id}`}
+                    disabled={!(activity.isGoing || activity.isHost)}
                     color='blue'
                     floated='right'
                     content={t('join')}
