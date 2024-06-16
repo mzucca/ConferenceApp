@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ReHub.Application.Core;
 using ReHub.Application.Interfaces;
-using ReHub.DbDataModel;
+using ReHub.Persistence;
 
 
 namespace ReHub.Application.Profiles;

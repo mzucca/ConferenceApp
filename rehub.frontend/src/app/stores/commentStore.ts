@@ -11,7 +11,7 @@ export default class CommentStore {
         makeAutoObservable(this);
     }
 
-    createHubConnection = (activityId: string) => {
+    createHubConnection = (activityId: number) => {
         if (store.activityStore.selectedActivity) {
             this.hubConnection = new HubConnectionBuilder()
                 .withUrl(process.env.REACT_APP_CHAT_URL + '?activityId=' + activityId, {

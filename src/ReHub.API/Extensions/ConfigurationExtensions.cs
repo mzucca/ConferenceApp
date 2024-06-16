@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using ReHub.DbDataModel.Configuration;
+﻿using ReHub.BackendAPI.Extensions;
 
 namespace ReHub.DbDataModel.Extensions
 {

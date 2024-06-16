@@ -43,7 +43,7 @@ public class User : BaseReHubModel
     //[Required]
     //[MaxLength(150)]
     public string DisplayName { get; set; }
-    public string Bio { get; set; }
+    public string? Bio { get; set; }
 
 
 

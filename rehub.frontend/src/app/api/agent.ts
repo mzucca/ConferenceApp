@@ -79,11 +79,11 @@ const requests = {
 const Activities = {
     list: (params: URLSearchParams) => axios.get<PaginatedResult<Activity[]>>('/activities', { params })
         .then(responseBody),
-    details: (id: string) => requests.get<Activity>(`/activities/${id}`),
+    details: (id: number) => requests.get<Activity>(`/activities/${id}`),
     create: (activity: ActivityFormValues) => requests.post<void>(`/activities`, activity),
     update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),
-    delete: (id: string) => requests.del<void>(`/activities/${id}`),
-    attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {})
+    delete: (id: number) => requests.del<void>(`/activities/${id}`),
+    attend: (id: number) => requests.post<void>(`/activities/${id}/attend`, {})
 }
 
 const Token ={
@@ -107,8 +107,8 @@ const Profiles = {
             headers: { 'Content-Type': 'multipart/form-data' }
         })
     },
-    setMainPhoto: (id: string) => axios.post(`/photos/${id}/setMain`, {}),
-    deletePhoto: (id: string) => axios.delete(`/photos/${id}`),
+    setMainPhoto: (id: number) => axios.post(`/photos/${id}/setMain`, {}),
+    deletePhoto: (id: number) => axios.delete(`/photos/${id}`),
     updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
     updateFollowing: (username: string) => requests.post(`/follow/${username}`, {}),
     listFollowings: (username: string, predicate: string) => requests

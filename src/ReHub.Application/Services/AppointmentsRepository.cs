@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ReHub.Domain;
 using ReHub.Domain.Enums;
+using ReHub.Persistence;
 
 namespace ReHub.DbDataModel.Services;
 

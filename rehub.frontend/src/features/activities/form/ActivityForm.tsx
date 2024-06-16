@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Header, Segment } from "semantic-ui-react";
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
-import { v4 as uuid } from 'uuid';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import MyTextInput from '../../../app/common/form/MyTextInput';
@@ -32,14 +31,14 @@ export default observer(function ActivityForm() {
     })
 
     useEffect(() => {
-        if (id) loadActivity(id).then(activity => setActivity(new ActivityFormValues(activity)))
+        if (id) loadActivity(Number(id)).then(activity => setActivity(new ActivityFormValues(activity)))
     }, [id, loadActivity])
 
     function handleFormSubmit(activity: ActivityFormValues) {
         if (!activity.id) {
             let newActivity = {
                 ...activity,
-                id: uuid()
+                id: -1
             }
             createActivity(newActivity).then(() => navigate(`/activities/${newActivity.id}`))
         } else {

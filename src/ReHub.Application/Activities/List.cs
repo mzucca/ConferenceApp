@@ -4,7 +4,7 @@ using MediatR;
 using ReHub.Application.Activities;
 using ReHub.Application.Core;
 using ReHub.Application.Interfaces;
-using ReHub.DbDataModel;
+using ReHub.Persistence;
 
 namespace ReHub.Application.Activities;
 

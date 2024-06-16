@@ -83,6 +83,7 @@ namespace ReHub.Application.Services
                 Image = registerDto.Image,
                 Password = registerDto.Password,
                 Type = UserType.Client, // By default all self registered user are "Clients". To be a doctor you must submit documents and approval
+                UserName=registerDto.Email // TODO get rid of UserName
             };
             if (user.AuthProvider == AuthProviders.database)
                 user.IsVerified = false;

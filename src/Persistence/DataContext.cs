@@ -1,30 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using ReHub.DbDataModel.Configuration;
-using ReHub.DbDataModel.Extensions;
 using ReHub.Domain;
 using ReHub.Domain.Enums;
 using ReHub.Utilities.Encryption;
 
-namespace ReHub.DbDataModel;
+namespace ReHub.Persistence;
 
 public class DataContext : DbContext
 {
     protected readonly IConfiguration _configuration;
     protected readonly ILogger<DataContext> _logger;
     private readonly IEncryptionProvider _provider;
-    private readonly DbConfiguration _dbConfiguration;
 
 
-    public DataContext(IConfiguration configuration, DbContextOptions options, ILogger<DataContext> logger) : base(options)
+    public DataContext(IEncryptionProvider provider,
+        DbContextOptions options) : base(options)
     {
-        _configuration = configuration;
-        _dbConfiguration = configuration.GetDbConfiguration();
-        if (_dbConfiguration == null) throw new InvalidOperationException("Cannot find suitable DB configuration, please check your configuration environment");
-        // We need to use a fixed salt to have the same results over time
-        _provider = new GenerateEncryptionProvider(_dbConfiguration.EncryptionKey, _dbConfiguration.Salt, EncryptionAlgorithm.Aes);
-        _logger = logger;
+        _provider = provider ?? throw new ArgumentNullException("Encryption provider cannot be null");
     }
 
     public virtual DbSet<Appointment> Appointments { get; set; }
@@ -52,17 +45,9 @@ public class DataContext : DbContext
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<Admin> Admins { get; set; }
 
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var connectionString = _dbConfiguration.ConnectionString;
-        //_logger.LogInformation($"Creating a PostgreSQL connection using:'{connectionString}'");
-        optionsBuilder.UseNpgsql(connectionString,
-            b => b.MigrationsAssembly("ReHub.DbDataModel"));
-    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseEncryption(this._provider);
+        modelBuilder.UseEncryption(_provider);
 
         // Activities
 
@@ -115,6 +100,7 @@ public class DataContext : DbContext
                     Name = "Mario",
                     Surname = "Z.",
                     DisplayName = "MarioZ",
+                    UserName = "admin@gmail.com",
                     Gender = GenderType.Male,
                     Password = "123456789",
                     Email = "admin@gmail.com",

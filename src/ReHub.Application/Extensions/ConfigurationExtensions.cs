@@ -41,7 +41,6 @@ public static class ConfigurationExtensions
         // TODO add cache manager
         //services.AddHostedService<JwtRefreshTokenCache>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IExternalTokenValidator, ExternalTokenValidator>();
 
     }
 }

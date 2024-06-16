@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Rehub.Authorization.Services;
 using ReHub.Utilities.Extensions;
 using ReHub.Application.Users;
-using ReHub.Application.Services;
+using ReHub.Infrastructure.Security;
 //using Org.BouncyCastle.Asn1.Ocsp;
 
 
@@ -126,6 +126,7 @@ namespace ReHub.BackendAPI.Controllers
             try
             {
                 var registerDTO = _externalTokenValidator.GetUserFromToken(token);
+                if (registerDTO != null) throw new UserExistsException();
                 var user =_userService.RegisterUser(registerDTO);
                 return CreateUserObject(user);
             }

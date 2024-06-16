@@ -3,14 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using ReHub.Persistence;
 
 #nullable disable
 
-namespace ReHub.DbDataModel.Migrations
+namespace ReHub.Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240615075927_InitialCreate")]
+    [Migration("20240616100535_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -23,7 +25,7 @@ namespace ReHub.DbDataModel.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Activity", b =>
+            modelBuilder.Entity("ReHub.Domain.Activity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,8 +42,7 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
@@ -58,8 +59,7 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Venue")
                         .IsRequired()
@@ -70,7 +70,7 @@ namespace ReHub.DbDataModel.Migrations
                     b.ToTable("Activities");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.ActivityAttendee", b =>
+            modelBuilder.Entity("ReHub.Domain.ActivityAttendee", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -79,19 +79,16 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsHost")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("UserId", "ActivityId");
 
@@ -99,10 +96,10 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("Id");
 
-                    b.ToTable("ActivityAttendee");
+                    b.ToTable("ActivityAttendees");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Appointment", b =>
+            modelBuilder.Entity("ReHub.Domain.Appointment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,32 +111,25 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateOnly>("Date")
-                        .HasColumnType("date")
-                        .HasColumnName("date");
+                        .HasColumnType("date");
 
                     b.Property<int>("MaxListeners")
-                        .HasColumnType("integer")
-                        .HasColumnName("max_listeners");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("SpeakerId")
-                        .HasColumnType("integer")
-                        .HasColumnName("speaker_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Status")
-                        .HasColumnType("integer")
-                        .HasColumnName("status");
+                        .HasColumnType("integer");
 
                     b.Property<TimeSpan>("Time")
-                        .HasColumnType("interval")
-                        .HasColumnName("time");
+                        .HasColumnType("interval");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -147,10 +137,10 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("SpeakerId");
 
-                    b.ToTable("appointments");
+                    b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.AppointmentClient", b =>
+            modelBuilder.Entity("ReHub.Domain.AppointmentClient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,28 +149,22 @@ namespace ReHub.DbDataModel.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AppointmentId")
-                        .HasColumnType("integer")
-                        .HasColumnName("appointment_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("ClientId")
-                        .HasColumnType("integer")
-                        .HasColumnName("client_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("PainRateAfter")
-                        .HasColumnType("integer")
-                        .HasColumnName("pain_rate_after");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("PainRateBefore")
-                        .HasColumnType("integer")
-                        .HasColumnName("pain_rate_before");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -188,10 +172,10 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("appointment_clients");
+                    b.ToTable("AppointmentClients");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.ClientDetails", b =>
+            modelBuilder.Entity("ReHub.Domain.ClientDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,80 +185,68 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<string>("BirthCity")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<string>("BirthCountry")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FiscalCode")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("character varying(16)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Nationality")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("Pathology")
                         .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("character varying(15)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Province")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId")
                         .IsUnique();
 
-                    b.ToTable("client_details");
+                    b.ToTable("ClientDetails");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Comment", b =>
+            modelBuilder.Entity("ReHub.Domain.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -293,12 +265,10 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -306,10 +276,10 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Conference", b =>
+            modelBuilder.Entity("ReHub.Domain.Conference", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -318,28 +288,23 @@ namespace ReHub.DbDataModel.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ChannelAdminId")
-                        .HasColumnType("integer")
-                        .HasColumnName("channel_admin_id");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ChannelName")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("channel_name");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("DoctorId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_active");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -347,13 +312,10 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("conference");
+                    b.ToTable("Conferences");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.ConferenceHistory", b =>
+            modelBuilder.Entity("ReHub.Domain.ConferenceHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -363,24 +325,19 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.Property<string>("Action")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("action");
+                        .HasColumnType("text");
 
                     b.Property<int?>("ActorId")
-                        .HasColumnType("integer")
-                        .HasColumnName("actor_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("ConferenceId")
-                        .HasColumnType("integer")
-                        .HasColumnName("conference_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -388,13 +345,10 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("ConferenceId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("conference_history");
+                    b.ToTable("ConferenceHistories");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.CouponUser", b =>
+            modelBuilder.Entity("ReHub.Domain.CouponUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -403,24 +357,19 @@ namespace ReHub.DbDataModel.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ClientId")
-                        .HasColumnType("integer")
-                        .HasColumnName("client_id");
+                        .HasColumnType("integer");
 
                     b.Property<int>("CouponId")
-                        .HasColumnType("integer")
-                        .HasColumnName("coupon_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("UseCount")
-                        .HasColumnType("integer")
-                        .HasColumnName("use_count");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -428,10 +377,10 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("CouponId");
 
-                    b.ToTable("coupon_users");
+                    b.ToTable("CouponUsers");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.DiscountCoupon", b =>
+            modelBuilder.Entity("ReHub.Domain.DiscountCoupon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -443,45 +392,35 @@ namespace ReHub.DbDataModel.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("CouponType")
-                        .HasColumnType("integer")
-                        .HasColumnName("coupon_type");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<double>("Discount")
-                        .HasColumnType("double precision")
-                        .HasColumnName("discount");
+                        .HasColumnType("double precision");
 
                     b.Property<int>("DiscountType")
-                        .HasColumnType("integer")
-                        .HasColumnName("discount_type");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ValidityUntil")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("validity_until");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("discount_coupons");
+                    b.ToTable("DiscountCoupons");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.LessonPackage", b =>
+            modelBuilder.Entity("ReHub.Domain.LessonPackage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -490,32 +429,27 @@ namespace ReHub.DbDataModel.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Cost")
-                        .HasColumnType("double precision")
-                        .HasColumnName("cost");
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("LessonsNum")
-                        .HasColumnType("integer")
-                        .HasColumnName("lessons_num");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("lesson_packages");
+                    b.ToTable("LessonPackages");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Notification", b =>
+            modelBuilder.Entity("ReHub.Domain.Notification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -524,21 +458,17 @@ namespace ReHub.DbDataModel.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("message");
+                        .HasColumnType("text");
 
                     b.Property<int>("SenderId")
-                        .HasColumnType("integer")
-                        .HasColumnName("sender_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("integer");
@@ -549,10 +479,10 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("notifications");
+                    b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.NotificationRecipient", b =>
+            modelBuilder.Entity("ReHub.Domain.NotificationRecipient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -561,24 +491,19 @@ namespace ReHub.DbDataModel.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("NotificationId")
-                        .HasColumnType("integer")
-                        .HasColumnName("notification_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("UserSeen")
-                        .HasColumnType("boolean")
-                        .HasColumnName("user_seen");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -586,41 +511,34 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("notification_recipients");
+                    b.ToTable("NotificationRecipients");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Payment", b =>
+            modelBuilder.Entity("ReHub.Domain.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
+                        .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Amount")
-                        .HasColumnType("double precision")
-                        .HasColumnName("amount");
+                        .HasColumnType("double precision");
 
                     b.Property<int>("ClientId")
-                        .HasColumnType("integer")
-                        .HasColumnName("client_id");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("CouponId")
-                        .HasColumnType("integer")
-                        .HasColumnName("coupon_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("LessonPackageId")
-                        .HasColumnType("integer")
-                        .HasColumnName("lesson_package_id");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -630,10 +548,32 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("LessonPackageId");
 
-                    b.ToTable("payments");
+                    b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.ReferrerDoctor", b =>
+            modelBuilder.Entity("ReHub.Domain.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("ReHub.Domain.ReferrerDoctor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -642,39 +582,28 @@ namespace ReHub.DbDataModel.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comment")
-                        .HasColumnType("text")
-                        .HasColumnName("comment");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                        .HasColumnType("text");
 
                     b.Property<string>("ReferralCode")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("referral_code");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.HasIndex("ReferralCode")
-                        .IsUnique();
-
-                    b.ToTable("referrer_doctors");
+                    b.ToTable("ReferrerDoctors");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.User", b =>
+            modelBuilder.Entity("ReHub.Domain.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -683,70 +612,68 @@ namespace ReHub.DbDataModel.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AuthProvider")
-                        .HasMaxLength(15)
                         .HasColumnType("integer");
 
+                    b.Property<string>("Bio")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)");
+
                     b.Property<string>("DisplayName")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("character varying(120)");
+                        .HasColumnType("text");
 
-                    b.Property<int>("Gender")
+                    b.Property<int?>("Gender")
                         .HasColumnType("integer");
 
                     b.Property<string>("Image")
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsVerified")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
+                    b.ToTable("Users");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
-                    b.ToTable("users");
-
-                    b.UseTptMappingStrategy();
+                    b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.UserFollowing", b =>
+            modelBuilder.Entity("ReHub.Domain.UserFollowing", b =>
                 {
                     b.Property<int>("ObserverId")
                         .HasColumnType("integer");
@@ -758,38 +685,39 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("UserFollowing");
+                    b.ToTable("UserFollowings");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Admin", b =>
+            modelBuilder.Entity("ReHub.Domain.Admin", b =>
                 {
-                    b.HasBaseType("ReHub.DbDataModel.Models.User");
+                    b.HasBaseType("ReHub.Domain.User");
 
-                    b.ToTable("admins");
+                    b.HasDiscriminator().HasValue("Admin");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             AuthProvider = 0,
-                            CreatedAt = new DateTime(2024, 6, 15, 7, 59, 26, 744, DateTimeKind.Utc).AddTicks(2634),
+                            CreatedAt = new DateTime(2024, 6, 16, 10, 5, 32, 966, DateTimeKind.Utc).AddTicks(6387),
                             Deleted = false,
                             DisplayName = "MarioZ",
-                            Email = "9iYms6TCxuIPYWRtaW5AZ21haWwuY29t",
+                            Email = "admin@gmail.com",
                             Gender = 0,
                             Image = "test",
                             IsVerified = true,
                             Name = "Mario",
-                            Password = "9iYms6TCxuIJMTIzNDU2Nzg5",
+                            Password = "123456789",
                             Surname = "Z.",
                             Type = 0,
-                            UpdatedAt = new DateTime(2024, 6, 15, 7, 59, 26, 744, DateTimeKind.Utc).AddTicks(2635)
+                            UpdatedAt = new DateTime(2024, 6, 16, 10, 5, 32, 966, DateTimeKind.Utc).AddTicks(6388),
+                            UserName = "admin@gmail.com"
                         });
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Client", b =>
+            modelBuilder.Entity("ReHub.Domain.Client", b =>
                 {
-                    b.HasBaseType("ReHub.DbDataModel.Models.User");
+                    b.HasBaseType("ReHub.Domain.User");
 
                     b.Property<int>("Balance")
                         .HasColumnType("integer");
@@ -807,33 +735,38 @@ namespace ReHub.DbDataModel.Migrations
 
                     b.HasIndex("ReferrerId");
 
-                    b.ToTable("clients");
+                    b.ToTable("Users", t =>
+                        {
+                            t.Property("SubType")
+                                .HasColumnName("Client_SubType");
+                        });
+
+                    b.HasDiscriminator().HasValue("Client");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Doctor", b =>
+            modelBuilder.Entity("ReHub.Domain.Doctor", b =>
                 {
-                    b.HasBaseType("ReHub.DbDataModel.Models.User");
+                    b.HasBaseType("ReHub.Domain.User");
 
                     b.Property<string>("About")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasColumnType("text");
 
                     b.Property<int>("SubType")
                         .HasColumnType("integer");
 
-                    b.ToTable("doctors");
+                    b.HasDiscriminator().HasValue("Doctor");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.ActivityAttendee", b =>
+            modelBuilder.Entity("ReHub.Domain.ActivityAttendee", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Activity", "Activity")
+                    b.HasOne("ReHub.Domain.Activity", "Activity")
                         .WithMany("Attendees")
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReHub.DbDataModel.Models.User", "AppUser")
+                    b.HasOne("ReHub.Domain.User", "AppUser")
                         .WithMany("Activities")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -844,26 +777,26 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Appointment", b =>
+            modelBuilder.Entity("ReHub.Domain.Appointment", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Client", null)
+                    b.HasOne("ReHub.Domain.Client", null)
                         .WithMany("Appointments")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("ReHub.DbDataModel.Models.Doctor", "Speaker")
+                    b.HasOne("ReHub.Domain.Doctor", "Speaker")
                         .WithMany("Appointments")
                         .HasForeignKey("SpeakerId");
 
                     b.Navigation("Speaker");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.AppointmentClient", b =>
+            modelBuilder.Entity("ReHub.Domain.AppointmentClient", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Appointment", "Appointment")
+                    b.HasOne("ReHub.Domain.Appointment", "Appointment")
                         .WithMany("AppointmentClients")
                         .HasForeignKey("AppointmentId");
 
-                    b.HasOne("ReHub.DbDataModel.Models.Client", "Client")
+                    b.HasOne("ReHub.Domain.Client", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId");
 
@@ -872,26 +805,26 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.ClientDetails", b =>
+            modelBuilder.Entity("ReHub.Domain.ClientDetails", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Client", "Client")
+                    b.HasOne("ReHub.Domain.Client", "Client")
                         .WithOne("ClientDetails")
-                        .HasForeignKey("ReHub.DbDataModel.Models.ClientDetails", "ClientId")
+                        .HasForeignKey("ReHub.Domain.ClientDetails", "ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Comment", b =>
+            modelBuilder.Entity("ReHub.Domain.Comment", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Activity", "Activity")
+                    b.HasOne("ReHub.Domain.Activity", "Activity")
                         .WithMany("Comments")
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReHub.DbDataModel.Models.User", "Author")
+                    b.HasOne("ReHub.Domain.User", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -902,26 +835,26 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Conference", b =>
+            modelBuilder.Entity("ReHub.Domain.Conference", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.User", "ChannelAdmin")
+                    b.HasOne("ReHub.Domain.User", "ChannelAdmin")
                         .WithMany()
                         .HasForeignKey("ChannelAdminId");
 
-                    b.HasOne("ReHub.DbDataModel.Models.Doctor", null)
+                    b.HasOne("ReHub.Domain.Doctor", null)
                         .WithMany("AdministratedChannels")
                         .HasForeignKey("DoctorId");
 
                     b.Navigation("ChannelAdmin");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.ConferenceHistory", b =>
+            modelBuilder.Entity("ReHub.Domain.ConferenceHistory", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.User", "Actor")
+                    b.HasOne("ReHub.Domain.User", "Actor")
                         .WithMany("ConferenceActions")
                         .HasForeignKey("ActorId");
 
-                    b.HasOne("ReHub.DbDataModel.Models.Conference", "Conference")
+                    b.HasOne("ReHub.Domain.Conference", "Conference")
                         .WithMany("ConferenceHistories")
                         .HasForeignKey("ConferenceId");
 
@@ -930,15 +863,15 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("Conference");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.CouponUser", b =>
+            modelBuilder.Entity("ReHub.Domain.CouponUser", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Client", "Client")
+                    b.HasOne("ReHub.Domain.Client", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReHub.DbDataModel.Models.DiscountCoupon", "Coupon")
+                    b.HasOne("ReHub.Domain.DiscountCoupon", "Coupon")
                         .WithMany("CouponUsers")
                         .HasForeignKey("CouponId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -949,37 +882,37 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("Coupon");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.DiscountCoupon", b =>
+            modelBuilder.Entity("ReHub.Domain.DiscountCoupon", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Client", null)
+                    b.HasOne("ReHub.Domain.Client", null)
                         .WithMany("UsedCoupons")
                         .HasForeignKey("ClientId");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Notification", b =>
+            modelBuilder.Entity("ReHub.Domain.Notification", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.User", "Sender")
+                    b.HasOne("ReHub.Domain.User", "Sender")
                         .WithMany("NotificationsForUser")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReHub.DbDataModel.Models.User", null)
+                    b.HasOne("ReHub.Domain.User", null)
                         .WithMany("NotificationsFromUser")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.NotificationRecipient", b =>
+            modelBuilder.Entity("ReHub.Domain.NotificationRecipient", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Notification", "Notification")
+                    b.HasOne("ReHub.Domain.Notification", "Notification")
                         .WithMany("NotificationRecipients")
                         .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReHub.DbDataModel.Models.User", "User")
+                    b.HasOne("ReHub.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -990,19 +923,19 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Payment", b =>
+            modelBuilder.Entity("ReHub.Domain.Payment", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.Client", "Client")
+                    b.HasOne("ReHub.Domain.Client", "Client")
                         .WithMany("Payments")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReHub.DbDataModel.Models.DiscountCoupon", "Coupon")
+                    b.HasOne("ReHub.Domain.DiscountCoupon", "Coupon")
                         .WithMany("Payments")
                         .HasForeignKey("CouponId");
 
-                    b.HasOne("ReHub.DbDataModel.Models.LessonPackage", "LessonPackage")
+                    b.HasOne("ReHub.Domain.LessonPackage", "LessonPackage")
                         .WithMany("Payments")
                         .HasForeignKey("LessonPackageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1015,15 +948,22 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("LessonPackage");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.UserFollowing", b =>
+            modelBuilder.Entity("ReHub.Domain.Photo", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.User", "Observer")
+                    b.HasOne("ReHub.Domain.User", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ReHub.Domain.UserFollowing", b =>
+                {
+                    b.HasOne("ReHub.Domain.User", "Observer")
                         .WithMany("Followings")
                         .HasForeignKey("ObserverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReHub.DbDataModel.Models.User", "Target")
+                    b.HasOne("ReHub.Domain.User", "Target")
                         .WithMany("Followers")
                         .HasForeignKey("TargetId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1034,28 +974,13 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("Target");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Admin", b =>
+            modelBuilder.Entity("ReHub.Domain.Client", b =>
                 {
-                    b.HasOne("ReHub.DbDataModel.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("ReHub.DbDataModel.Models.Admin", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Client", b =>
-                {
-                    b.HasOne("ReHub.DbDataModel.Models.Doctor", "Doctor")
+                    b.HasOne("ReHub.Domain.Doctor", "Doctor")
                         .WithMany("Clients")
                         .HasForeignKey("DoctorId");
 
-                    b.HasOne("ReHub.DbDataModel.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("ReHub.DbDataModel.Models.Client", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReHub.DbDataModel.Models.ReferrerDoctor", "Referrer")
+                    b.HasOne("ReHub.Domain.ReferrerDoctor", "Referrer")
                         .WithMany("Clients")
                         .HasForeignKey("ReferrerId");
 
@@ -1064,55 +989,46 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("Referrer");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Doctor", b =>
-                {
-                    b.HasOne("ReHub.DbDataModel.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("ReHub.DbDataModel.Models.Doctor", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Activity", b =>
+            modelBuilder.Entity("ReHub.Domain.Activity", b =>
                 {
                     b.Navigation("Attendees");
 
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Appointment", b =>
+            modelBuilder.Entity("ReHub.Domain.Appointment", b =>
                 {
                     b.Navigation("AppointmentClients");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Conference", b =>
+            modelBuilder.Entity("ReHub.Domain.Conference", b =>
                 {
                     b.Navigation("ConferenceHistories");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.DiscountCoupon", b =>
+            modelBuilder.Entity("ReHub.Domain.DiscountCoupon", b =>
                 {
                     b.Navigation("CouponUsers");
 
                     b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.LessonPackage", b =>
+            modelBuilder.Entity("ReHub.Domain.LessonPackage", b =>
                 {
                     b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Notification", b =>
+            modelBuilder.Entity("ReHub.Domain.Notification", b =>
                 {
                     b.Navigation("NotificationRecipients");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.ReferrerDoctor", b =>
+            modelBuilder.Entity("ReHub.Domain.ReferrerDoctor", b =>
                 {
                     b.Navigation("Clients");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.User", b =>
+            modelBuilder.Entity("ReHub.Domain.User", b =>
                 {
                     b.Navigation("Activities");
 
@@ -1125,9 +1041,11 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("NotificationsForUser");
 
                     b.Navigation("NotificationsFromUser");
+
+                    b.Navigation("Photos");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Client", b =>
+            modelBuilder.Entity("ReHub.Domain.Client", b =>
                 {
                     b.Navigation("Appointments");
 
@@ -1139,7 +1057,7 @@ namespace ReHub.DbDataModel.Migrations
                     b.Navigation("UsedCoupons");
                 });
 
-            modelBuilder.Entity("ReHub.DbDataModel.Models.Doctor", b =>
+            modelBuilder.Entity("ReHub.Domain.Doctor", b =>
                 {
                     b.Navigation("AdministratedChannels");
 

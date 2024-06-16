@@ -6,7 +6,7 @@ import { Profile } from "../models/profile";
 import { Pagination, PagingParams } from "../models/pagination";
 
 export default class ActivityStore {
-    activityRegistry = new Map<string, Activity>();
+    activityRegistry = new Map<number, Activity>();
     selectedActivity?: Activity = undefined;
     editMode = false;
     loading = false;
@@ -106,7 +106,7 @@ export default class ActivityStore {
         this.pagination = pagination;
     }
 
-    loadActivity = async (id: string) => {
+    loadActivity = async (id: number) => {
         let activity = this.getActivity(id);
         if (activity) {
             this.selectedActivity = activity;
@@ -140,7 +140,7 @@ export default class ActivityStore {
         this.activityRegistry.set(activity.id, activity);
     }
 
-    private getActivity = (id: string) => {
+    private getActivity = (id: number) => {
         return this.activityRegistry.get(id);
     }
 
@@ -178,7 +178,7 @@ export default class ActivityStore {
         }
     }
 
-    deleteActivity = async (id: string) => {
+    deleteActivity = async (id: number) => {
         this.loading = true;
         try {
             await agent.Activities.delete(id);

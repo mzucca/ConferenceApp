@@ -1,6 +1,6 @@
 using MediatR;
 using ReHub.Application.Core;
-using ReHub.DbDataModel;
+using ReHub.Persistence;
 
 namespace ReHub.Application.Activities;
 
@@ -8,7 +8,7 @@ public class Delete
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 
     public class Handler : IRequestHandler<Command, Result<Unit>>

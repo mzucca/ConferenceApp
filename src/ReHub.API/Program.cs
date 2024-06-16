@@ -1,86 +1,48 @@
-using ReHub.Utilities.Extensions;
 using Serilog;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using ReHub.BackendAPI.Extensions;
-using ReHub.Application.Extensions;
+using ReHub.BackendAPI.Middleware;
 
 namespace ReHub.BackendAPI
 {
     public class Program
     {
-        internal static readonly string CORS_ALLOW_LOCALHOST = "AllowLocalhost";
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            // TODO manage CORS policies
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(CORS_ALLOW_LOCALHOST,
-                builder =>
-                {
-                    builder
-                    .AllowAnyOrigin() //.WithOrigins("http://localhost:3000")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-                    //.AllowCredentials();
-                });
-            });
+
 
             //Add support to logging with SERILOG
             builder.Host.UseSerilog((context, configuration) =>
                 configuration.ReadFrom.Configuration(context.Configuration));
 
             builder.Configuration.AddEnvironmentVariables(prefix: "ReHub");
-            // Add services to the container.
-            builder.Services.ConfigureLocalization();
-            builder.Services.AddControllers()
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-                });
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReHub Backend API", Version = "v1" });
 
-                var securityScheme = new OpenApiSecurityScheme
-                {
-                    Name = "ReHub Application",
-                    Description = "ReHub Backend API",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer", // must be lowercase
-                    BearerFormat = "JWT",
-                    Reference = new OpenApiReference
-                    {
-                        Id = JwtBearerDefaults.AuthenticationScheme,
-                        Type = ReferenceType.SecurityScheme
-                    }
-                };
-                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {securityScheme, Array.Empty<string>()}
-            });
-            });
-
-            builder.Services.ConfigureJwtServices(builder.Configuration);
-
-            //builder.Services.AddScoped<DataContext, PostgresDbContext>();
-            //builder.Services.AddDbContext<PostgresDbContext>();
-            //builder.Services.RegisterRepositories();
-            builder.Services.RegisterUtilities();
+            builder.Services.AddApplicationServices(builder.Configuration);
             builder.Services.AddCoreAdmin();
 
             var app = builder.Build();
             //MigrateDatabase(app);
             app.UseStaticFiles();
-            app.UseCors(CORS_ALLOW_LOCALHOST);
+            app.UseCors("CorsPolicy");
             app.UseRouting();
+
+            // Configure the HTTP request pipeline.
+            app.UseMiddleware<ExceptionMiddleware>();
+
+            // https://docs.nwebsec.com/en/latest/ check for newer options
+            //app.UseXContentTypeOptions();
+            //app.UseReferrerPolicy(opt => opt.NoReferrer());
+            //app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+            //app.UseXfo(opt => opt.Deny());
+            //app.UseCsp(opt => opt
+            //    .BlockAllMixedContent()
+            //    .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
+            //    .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+            //    .FormActions(s => s.Self())
+            //    .FrameAncestors(s => s.Self())
+            //    .ImageSources(s => s.Self().CustomSources("blob:", "https://res.cloudinary.com", "https://platform-lookaside.fbsbx.com"))
+            //    .ScriptSources(s => s.Self())
+            //);
 
             app.ConfigureLocalization();
 
@@ -102,7 +64,7 @@ namespace ReHub.BackendAPI
             //Add support to logging request with SERILOG
             app.UseSerilogRequestLogging();
 
-            app.UseCoreAdminCustomTitle("Core Admin ReHub App");
+            app.UseCoreAdminCustomTitle("ReHub App Admin Tool");
 
             // Required for Core Admin
             app.MapDefaultControllerRoute();

@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReHub.Application.Activities;
-using ReHub.BackendAPI.Models;
 using ReHub.Domain;
 
 namespace ReHub.BackendAPI.Controllers
 {
     public class ActivitiesController : BaseApiController
     {
+        public ActivitiesController(IMediator mediator) : base(mediator) { }
+
         [HttpGet]
         public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
@@ -16,7 +17,7 @@ namespace ReHub.BackendAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetActivity(Guid id)
+        public async Task<IActionResult> GetActivity(int id)
         {
             return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
         }
@@ -37,7 +38,7 @@ namespace ReHub.BackendAPI.Controllers
 
         [Authorize(Policy = "IsActivityHost")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(int id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }

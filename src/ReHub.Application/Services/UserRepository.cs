@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using ReHub.Application.Users;
-using ReHub.DbDataModel.Extensions;
 using ReHub.Domain;
+using ReHub.Persistence;
 using ReHub.Utilities.Encryption;
 
 namespace ReHub.DbDataModel.Services;
@@ -16,7 +16,7 @@ public class UserRepository<T> : Repository<T>, IUserRepository<T> where T : Use
         _provider = new GenerateEncryptionProvider("rehub_encrypt_key", EncryptionAlgorithm.Aes);
 
     }
-    public T? GetByEMail(string email) => _dataContext.GetUserByEmail<T>(email);
+    public T? GetByEMail(string email) => _dataContext.Set<T>().Where(u=>u.Email == email).FirstOrDefault();
 
     public void Register(T user)
     {

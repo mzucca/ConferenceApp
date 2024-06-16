@@ -1,7 +1,7 @@
 import { Profile } from "./profile";
 
 export interface Activity {
-    id: string;
+    id: number;
     title: string;
     description: string;
     category: string;
@@ -18,7 +18,7 @@ export interface Activity {
 
 export class ActivityFormValues
   {
-    id?: string = undefined;
+    id?: number = undefined;
     title: string = '';
     category: string = '';
     description: string = '';

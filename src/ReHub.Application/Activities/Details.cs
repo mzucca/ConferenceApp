@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ReHub.Application.Core;
 using ReHub.Application.Interfaces;
-using ReHub.DbDataModel;
+using ReHub.Persistence;
 
 namespace ReHub.Application.Activities;
 
@@ -12,7 +12,7 @@ public class Details
 {
     public class Query : IRequest<Result<ActivityDto>>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 
     public class Handler : IRequestHandler<Query, Result<ActivityDto>>

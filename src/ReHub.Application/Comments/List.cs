@@ -3,7 +3,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ReHub.Application.Core;
-using ReHub.DbDataModel;
+using ReHub.Persistence;
 
 namespace ReHub.Application.Comments
 {

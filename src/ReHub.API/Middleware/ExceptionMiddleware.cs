@@ -25,6 +25,7 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
+            // TO log and intercept server errors on the client
             _logger.LogError(ex, ex.Message);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

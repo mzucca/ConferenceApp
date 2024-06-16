@@ -3,7 +3,7 @@ using Rehub.Authorization.Extensions;
 using ReHub.Application.Users;
 using ReHub.Domain.Enums;
 
-namespace ReHub.Application.Services;
+namespace ReHub.Infrastructure.Security;
 
 public class ExternalTokenValidator : IExternalTokenValidator
 {
@@ -13,7 +13,7 @@ public class ExternalTokenValidator : IExternalTokenValidator
     {
         _userService = userService;
     }
-    public RegisterDto GetUserFromToken(OauthToken token)
+    public RegisterDto? GetUserFromToken(OauthToken token)
     {
         var provider = token.Provider.ConvertToAuthProvider();
 
@@ -24,7 +24,7 @@ public class ExternalTokenValidator : IExternalTokenValidator
                 var payload = GoogleJsonWebSignature.ValidateAsync(token.Token,
                     new GoogleJsonWebSignature.ValidationSettings()).Result;
                 var user = _userService.GetUser(payload.Email);
-                if (user != null) throw new UserExistsException(payload.Email);
+                if (user == null) return null;
 
                 var registerDTO = new RegisterDto
                 {

@@ -1,6 +1,7 @@
 ﻿using ReHub.Domain;
+using ReHub.Persistence;
 
-namespace ReHub.DbDataModel.Extensions;
+namespace ReHub.BackendAPI.Extensions;
 
 public static class DataContextExtensions
 {
@@ -16,7 +17,7 @@ public static class DataContextExtensions
         var users = dataContext.Set<T>();
         if (users == null) return null;
         email = email.Trim().ToLowerInvariant();
-        return users.FirstOrDefault<T>(u => u.Email == email);
+        return users.FirstOrDefault(u => u.Email == email);
     }
     /// <summary>
     ///  Get a User (client, doctor or admin) from Id
@@ -30,7 +31,7 @@ public static class DataContextExtensions
         var entities = dataContext.Set<T>();
         if (entities == null) return null;
 
-        return entities.FirstOrDefault<T>(u => u.Id == id);
+        return entities.FirstOrDefault(u => u.Id == id);
 
     }
 }

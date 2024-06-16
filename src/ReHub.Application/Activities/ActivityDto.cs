@@ -4,7 +4,7 @@ namespace ReHub.Application.Activities;
 
 public class ActivityDto
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Title { get; set; }
     public DateTime Date { get; set; }
     public string Description { get; set; }

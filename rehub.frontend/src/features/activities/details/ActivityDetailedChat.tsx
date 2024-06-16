@@ -9,7 +9,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-    activityId: string;
+    activityId: number;
 }
 
 export default observer(function ActivityDetailedChat({ activityId }: Props) {

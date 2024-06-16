@@ -2,8 +2,8 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 using ReHub.Application.Core;
-using ReHub.DbDataModel;
 using ReHub.Domain;
+using ReHub.Persistence;
 
 namespace ReHub.Application.Activities;
 

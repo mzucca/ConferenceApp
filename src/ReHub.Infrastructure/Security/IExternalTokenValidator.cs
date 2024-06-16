@@ -1,7 +1,7 @@
 ﻿using ReHub.Application.Users;
 
 
-namespace ReHub.Application.Services
+namespace ReHub.Infrastructure.Security
 {
     public interface IExternalTokenValidator
     {
