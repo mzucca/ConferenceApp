@@ -51,3 +51,7 @@
 /src/ReHub.Infrastructure/bin/Debug/net8.0
 /src/ReHub.Infrastructure/obj
 /~$ternal Login.docx
+/rehub.frontend/obj/Debug
+/src/ReHub.API/bin/Debug/net8.0
+/src/ReHub.API/Logs
+/src/ReHub.API/obj
