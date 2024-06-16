@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Activity, ActivityFormValues } from '../models/activity';
 import { PaginatedResult } from '../models/pagination';
 import { Photo, Profile, UserActivity } from '../models/profile';
-import { User, UserFormValues } from '../models/user';
+import { User, UserFormValues, OauthToken } from '../models/user';
 import { router } from '../router/Routes';
 import { store } from '../stores/store';
 import { ConferenceToken } from '../models/conferenceToken';
@@ -33,6 +33,7 @@ axios.interceptors.response.use(async response => {
     }
     return response;
 }, (error: AxiosError) => {
+    console.log('error');
     const { data, status, config } = error.response as AxiosResponse;
     switch (status) {
         case 400:
@@ -92,7 +93,9 @@ const Token ={
 const Account = {
     current: () => requests.get<User>('account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
-    register: (user: UserFormValues) => requests.post<User>('/account/register', user)
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user),
+    externalLogin: (token: OauthToken) => requests.post<User>('/account/externalLogin', token),
+    externalRegister: (token: OauthToken) => requests.post<User>('/account/externalRegistration',token)
 }
 
 const Profiles = {

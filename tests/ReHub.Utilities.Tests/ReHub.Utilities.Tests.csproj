@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Rehub.Authorization\Rehub.Authorization.csproj" />
     <ProjectReference Include="..\..\src\ReHub.Utilities\ReHub.Utilities.csproj" />
   </ItemGroup>
 

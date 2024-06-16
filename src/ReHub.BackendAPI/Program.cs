@@ -1,14 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using ReHub.Db.PostgreSQL;
 using ReHub.Utilities.Extensions;
 using Serilog;
-using ReHub.DbDataModel.Extensions;
-using Rehub.Authorization.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using ReHub.BackendAPI.Extensions;
+using ReHub.Application.Extensions;
 
 namespace ReHub.BackendAPI
 {
@@ -74,13 +71,13 @@ namespace ReHub.BackendAPI
             builder.Services.ConfigureJwtServices(builder.Configuration);
 
             //builder.Services.AddScoped<DataContext, PostgresDbContext>();
-            builder.Services.AddDbContext<PostgresDbContext>();
-            builder.Services.RegisterRepositories();
+            //builder.Services.AddDbContext<PostgresDbContext>();
+            //builder.Services.RegisterRepositories();
             builder.Services.RegisterUtilities();
             builder.Services.AddCoreAdmin();
 
             var app = builder.Build();
-            MigrateDatabase(app);
+            //MigrateDatabase(app);
             app.UseStaticFiles();
             app.UseCors(CORS_ALLOW_LOCALHOST);
             app.UseRouting();
@@ -123,30 +120,30 @@ namespace ReHub.BackendAPI
             }
 
         }
-        private static void MigrateDatabase(WebApplication app)
-        {
-            using (var scope = app.Services.CreateScope())
-            {
-                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                if(logger == null)
-                {
-                    Console.WriteLine("Error creating the logger. Cannot Migrate DB");
-                    throw new Exception("Error creating the logger");
+        //private static void MigrateDatabase(WebApplication app)
+        //{
+        //    using (var scope = app.Services.CreateScope())
+        //    {
+        //        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        //        if (logger == null)
+        //        {
+        //            Console.WriteLine("Error creating the logger. Cannot Migrate DB");
+        //            throw new Exception("Error creating the logger");
 
-                }
-                using (var appContext = scope.ServiceProvider.GetRequiredService<PostgresDbContext>())
-                {
-                    try
-                    {
-                        appContext.Database.Migrate();
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.LogError($"Error migrating the database: {ex.Message}");
-                        throw ex;
-                    }
-                }
-            }
-        }
+        //        }
+        //        using (var appContext = scope.ServiceProvider.GetRequiredService<PostgresDbContext>())
+        //        {
+        //            try
+        //            {
+        //                appContext.Database.Migrate();
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                logger.LogError($"Error migrating the database: {ex.Message}");
+        //                throw ex;
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

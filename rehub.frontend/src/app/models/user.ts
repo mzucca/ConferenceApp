@@ -5,6 +5,11 @@ export interface User {
     image?: string;
 }
 
+export interface OauthToken {
+    provider: string;
+    token: string;
+}
+
 export interface UserFormValues {
     email: string;
     password: string;

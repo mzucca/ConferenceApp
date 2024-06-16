@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { User, UserFormValues } from "../models/user";
+import { User, UserFormValues, OauthToken } from "../models/user";
 import { router } from "../router/Routes";
 import { store } from "./store";
 
@@ -14,9 +14,37 @@ export default class UserStore {
     get isLoggedIn() {
         return !!this.user;
     }
-
+    externalLogin = async (provider: string, token: string) => {
+        try{
+            console.log('Token:='+token)
+            const authToken: OauthToken = { provider: provider, token: token };
+            const user = await agent.Account.externalLogin(authToken);
+            console.log(user);
+            store.commonStore.setToken(user.token);
+            runInAction(() => this.user = user);
+            router.navigate('/activities');
+            store.modalStore.closeModal();
+        } catch (error) {
+            throw error;
+        }
+    }
+    externalRegister = async (provider:string, token: string) => {
+        try {
+            console.log('Token:=' + token)
+            const authToken: OauthToken = { provider: provider, token: token };
+            const user = await agent.Account.externalRegister(authToken);
+            console.log(user);
+            store.commonStore.setToken(user.token);
+            runInAction(() => this.user = user);
+            router.navigate('/activities');
+            store.modalStore.closeModal();
+        } catch (error) {
+            throw error;
+        }
+    }
     login = async (creds: UserFormValues) => {
         try {
+            console.log('before login');
             const user = await agent.Account.login(creds);
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);

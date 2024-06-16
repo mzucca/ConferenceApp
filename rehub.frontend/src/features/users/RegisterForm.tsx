@@ -1,10 +1,12 @@
 import { ErrorMessage, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
-import { Button, Header } from "semantic-ui-react";
+import { Button, Divider, Header, Segment } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/stores/store";
 import * as Yup from 'yup';
 import ValidationError from "../errors/ValidationError";
+import { useTranslation } from 'react-i18next';
+import { GoogleLogin } from "@react-oauth/google";
 
 export default observer(function RegisterForm() {
     const { userStore } = useStore();
@@ -21,6 +23,7 @@ export default observer(function RegisterForm() {
             })}
         >
             {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
+                <Segment>
                 <Form className='ui form error' onSubmit={handleSubmit} autoComplete='off'>
                     <Header as='h2' content='Sign up to Rihub' color="teal" textAlign="center" />
                     <MyTextInput placeholder="Display Name" name='displayName' />
@@ -35,7 +38,13 @@ export default observer(function RegisterForm() {
                         positive content='Register' 
                         type="submit" fluid 
                     />
-                </Form>
+                    </Form>
+                    <Divider horizontal>Or</Divider>
+                    <GoogleLogin
+                        onSuccess={credentialResponse => { userStore.externalRegister('google',credentialResponse.credential!) }}
+                        onError={() => console.log('Login Failure')}
+                    />
+                </Segment>
             )}
 
         </Formik>

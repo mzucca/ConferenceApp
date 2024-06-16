@@ -5,8 +5,6 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{033BF716-114E-45AB-A552-4F78EB7E7966}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.DbDataModel", "src\ReHub.DbDataModel\ReHub.DbDataModel.csproj", "{987E0A4E-6858-456B-B06F-92AD096BE7DE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.BackendAPI", "src\ReHub.BackendAPI\ReHub.BackendAPI.csproj", "{6EDA5A42-130B-4789-BBD8-16A6FB202D8F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.BackendAPI.Tests", "tests\ReHub.BackendAPI.Tests\ReHub.BackendAPI.Tests.csproj", "{816AFD05-92F8-4222-B48E-6C230AEA23E8}"
@@ -22,9 +20,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Utilities", "src\ReHu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Utilities.Tests", "tests\ReHub.Utilities.Tests\ReHub.Utilities.Tests.csproj", "{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rehub.Authorization", "src\Rehub.Authorization\Rehub.Authorization.csproj", "{A29F0A1F-8584-46DC-A828-4360E3BFD090}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rehub.CoreAdmin", "src\Rehub.CoreAdmin\Rehub.CoreAdmin.csproj", "{9506F610-4DEE-4B1A-96FF-A8675B4838F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{DEA17440-C044-432B-AD45-647E2901D117}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "rehub.frontend", "rehub.frontend\rehub.frontend.esproj", "{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReHub.Application", "src\ReHub.Application\ReHub.Application.csproj", "{4B1A5E9C-E409-4279-B45A-F1B2A9026E9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReHub.Domain", "src\ReHub.Domain\ReHub.Domain.csproj", "{72A91622-7D4C-484F-978C-611856D3FA8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Persistence", "src\Persistence\ReHub.Persistence.csproj", "{89B8A02A-4B11-4100-AD24-FCFDFB7EDC1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReHub.Infrastructure", "src\ReHub.Infrastructure\ReHub.Infrastructure.csproj", "{D87711BF-1FB1-4C25-9E0F-33EB0B3B3596}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +40,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{987E0A4E-6858-456B-B06F-92AD096BE7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{987E0A4E-6858-456B-B06F-92AD096BE7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{987E0A4E-6858-456B-B06F-92AD096BE7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{987E0A4E-6858-456B-B06F-92AD096BE7DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6EDA5A42-130B-4789-BBD8-16A6FB202D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6EDA5A42-130B-4789-BBD8-16A6FB202D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EDA5A42-130B-4789-BBD8-16A6FB202D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,14 +60,32 @@ Global
 		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A29F0A1F-8584-46DC-A828-4360E3BFD090}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9506F610-4DEE-4B1A-96FF-A8675B4838F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4B1A5E9C-E409-4279-B45A-F1B2A9026E9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B1A5E9C-E409-4279-B45A-F1B2A9026E9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B1A5E9C-E409-4279-B45A-F1B2A9026E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B1A5E9C-E409-4279-B45A-F1B2A9026E9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72A91622-7D4C-484F-978C-611856D3FA8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72A91622-7D4C-484F-978C-611856D3FA8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72A91622-7D4C-484F-978C-611856D3FA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72A91622-7D4C-484F-978C-611856D3FA8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89B8A02A-4B11-4100-AD24-FCFDFB7EDC1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B8A02A-4B11-4100-AD24-FCFDFB7EDC1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B8A02A-4B11-4100-AD24-FCFDFB7EDC1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B8A02A-4B11-4100-AD24-FCFDFB7EDC1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D87711BF-1FB1-4C25-9E0F-33EB0B3B3596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D87711BF-1FB1-4C25-9E0F-33EB0B3B3596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D87711BF-1FB1-4C25-9E0F-33EB0B3B3596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D87711BF-1FB1-4C25-9E0F-33EB0B3B3596}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +94,7 @@ Global
 		{816AFD05-92F8-4222-B48E-6C230AEA23E8} = {033BF716-114E-45AB-A552-4F78EB7E7966}
 		{55196918-5CF9-446E-B850-334B9C0FAD52} = {033BF716-114E-45AB-A552-4F78EB7E7966}
 		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA} = {033BF716-114E-45AB-A552-4F78EB7E7966}
+		{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A} = {DEA17440-C044-432B-AD45-647E2901D117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03143751-A94B-4C3A-800B-3C52C50C54A6}

@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Add support to logging with SERILOG
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 // Add services to the container.
 
 builder.Services.AddControllers(opt => 
@@ -25,10 +29,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 
-//app.UseXContentTypeOptions();
-//app.UseReferrerPolicy(opt => opt.NoReferrer());
-//app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
-//app.UseXfo(opt => opt.Deny());
+
+
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opt => opt.NoReferrer());
+app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
+app.UseXfo(opt => opt.Deny());
 //app.UseCsp(opt => opt
 //    .BlockAllMixedContent()
 //    .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))

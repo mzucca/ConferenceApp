@@ -6,6 +6,7 @@
     "@livekit/components-react": "^2.3.2",
     "@livekit/components-styles": "^1.0.12",
     "@microsoft/signalr": "^8.0.0",
+    "@react-oauth/google": "^0.12.1",
     "@types/node": "^20.14.2",
     "@types/react-infinite-scroller": "^1.2.3",
     "axios": "^1.7.2",

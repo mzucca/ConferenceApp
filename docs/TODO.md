@@ -1,4 +1,10 @@
 # TODOs
+1. Merge Autorization and Utilinties into inrastructure and adapt the <b>pattern</b>
+
+1. Fix Activities controller
+1. Add strava activities
+
+
 1. Create Appointments repository
 2. Add Signalr infra
 3. Add mail sender services

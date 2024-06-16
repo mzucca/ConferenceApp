@@ -1,0 +1,1 @@
+﻿Adapt the pattern to CQRS and remove serivces folder
