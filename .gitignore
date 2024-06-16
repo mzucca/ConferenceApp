@@ -40,3 +40,14 @@
 /src/Rehub.CoreAdmin/obj
 /frontend/node_modules
 /rehub.frontend/node_modules
+/rehub.frontend/.vs/rehub.frontend/FileContentIndex
+/rehub.frontend/.vs
+/src/Persistence/bin/Debug/net8.0
+/src/Persistence/obj
+/src/ReHub.Application/bin/Debug/net8.0
+/src/ReHub.Application/obj
+/src/ReHub.Domain/bin/Debug/net8.0
+/src/ReHub.Domain/obj
+/src/ReHub.Infrastructure/bin/Debug/net8.0
+/src/ReHub.Infrastructure/obj
+/~$ternal Login.docx
