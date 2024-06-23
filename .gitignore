@@ -55,3 +55,5 @@
 /src/ReHub.API/bin/Debug/net8.0
 /src/ReHub.API/Logs
 /src/ReHub.API/obj
+/src/Plugins/RiHub.Strava/bin/Debug/net8.0
+/src/Plugins/RiHub.Strava/obj
