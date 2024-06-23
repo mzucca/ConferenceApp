@@ -10,18 +10,7 @@ namespace ReHub.Domain.Enums
         Other,
         None
     }
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum UserType
-    {
-        [EnumMember(Value = "admin")]
-        Admin,
-        [EnumMember(Value = "doctor")]
-        Doctor,
-        [EnumMember(Value = "client")]
-        Client,
-        [EnumMember(Value = "none")]
-        None
-    }
+
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum UserSubType
     {

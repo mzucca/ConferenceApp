@@ -22,7 +22,6 @@ public static class RegisterServices
         services.AddScoped<IUserRepository<Client>, UserRepository<Client>>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         services.AddScoped<IUserRepository<User>, UserRepository<User>>();
-        services.AddScoped<IUserRepository<Doctor>, UserRepository<Doctor>>();
         services.AddScoped<INotificationRepository, NotificationRepository>();
         services.AddScoped<IUserService, UserService>();
         return services;

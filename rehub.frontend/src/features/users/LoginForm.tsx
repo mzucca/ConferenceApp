@@ -29,7 +29,7 @@ export default observer(function LoginForm() {
                         <Divider horizontal>Or</Divider>
                             <GoogleLogin 
                         onSuccess={credentialResponse => {
-                            userStore.externalLogin('google', credentialResponse.credential!)
+                            userStore.externalLogin('google', credentialResponse.credential!);
                         }}
                         onError={()=>console.log('Login Failure')}
                             />

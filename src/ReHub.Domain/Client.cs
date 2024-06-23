@@ -24,7 +24,7 @@ public class Client : User
     public int? DoctorId { get; set; }
 
     //[ForeignKey("DoctorId")]
-    public virtual Doctor Doctor { get; set; }
+    public virtual User Doctor { get; set; }
     public int? ReferrerId { get; set; }
 
     //[ForeignKey("ReferrerId")]

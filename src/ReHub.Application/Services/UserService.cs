@@ -42,7 +42,7 @@ namespace ReHub.Application.Services
                 Email = userMail,
                 Id = user.Id,
                 DisplayName = user.DisplayName,
-                Role = user.Type.ToString(),
+                Role = user.Role.ToString().ToUpperInvariant(),
                 Image = user.Image
             };
         }
@@ -61,7 +61,7 @@ namespace ReHub.Application.Services
                 Email = userMail,
                 Id = user.Id,
                 DisplayName = user.DisplayName,
-                Role = user.Type.ToString(),
+                Role = user.Role.ToString().ToUpperInvariant(),
             };
         }
 
@@ -74,6 +74,8 @@ namespace ReHub.Application.Services
         }
         public UserDefinition RegisterUser(RegisterDto registerDto)
         {
+            if (registerDto == null) throw new ArgumentNullException("Register DTO cannot be null");
+            // TODO Fix this can't be null
             var user = new User
             {
                 Email = registerDto.Email.ToLowerInvariant(),
@@ -82,7 +84,7 @@ namespace ReHub.Application.Services
                 Name = registerDto.Name,
                 Image = registerDto.Image,
                 Password = registerDto.Password,
-                Type = UserType.Client, // By default all self registered user are "Clients". To be a doctor you must submit documents and approval
+                Role = UserRole.Client, // By default all self registered user are "Clients". To be a doctor you must submit documents and approval
                 UserName=registerDto.Email // TODO get rid of UserName
             };
             if (user.AuthProvider == AuthProviders.database)

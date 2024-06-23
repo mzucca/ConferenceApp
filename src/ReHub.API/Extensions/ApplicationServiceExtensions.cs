@@ -29,6 +29,7 @@ namespace ReHub.BackendAPI.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReHub Backend API", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ReHub.API.xml"));
 
                 var securityScheme = new OpenApiSecurityScheme
                 {

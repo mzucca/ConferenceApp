@@ -9,11 +9,9 @@ namespace ReHub.Domain;
 //[Index("Id", IsUnique = true)]
 public class User : BaseReHubModel
 {
-    public User()
+    public User() : base()
     {
         Deleted = false;
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
         Gender = GenderType.None;
         IsVerified = false;
     }
@@ -46,6 +44,7 @@ public class User : BaseReHubModel
     public string? Bio { get; set; }
 
 
+    public UserRole Role { get; set; }
 
     //[EncryptColumn]
     public string? Password { get; set; }
@@ -56,9 +55,6 @@ public class User : BaseReHubModel
     //[MaxLength(15)]
     //[Required]
     public AuthProviders AuthProvider { get; set; }
-
-    //[Required]
-    public UserType Type { get; set; }
 
     //[Required]
     public bool Deleted { get; set; } = false;
@@ -77,8 +73,4 @@ public class User : BaseReHubModel
 
     public virtual ICollection<Notification> NotificationsFromUser { get; set; }
 
-    public override string ToString()
-    {
-        return $"User(id={Id}, name={Name}, type={Type})";
-    }
 }

@@ -34,6 +34,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.Persistence", "src\Pe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReHub.API", "src\ReHub.API\ReHub.API.csproj", "{349691FE-F524-4AEB-B812-D3E4B89D6245}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{F5223AD5-2641-4BAB-A3FC-F9B3322DDADD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiHub.Strava", "src\Plugins\RiHub.Strava\RiHub.Strava.csproj", "{1D98A711-ACDB-4E65-9888-BA1567B5A60D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +90,10 @@ Global
 		{349691FE-F524-4AEB-B812-D3E4B89D6245}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{349691FE-F524-4AEB-B812-D3E4B89D6245}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{349691FE-F524-4AEB-B812-D3E4B89D6245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D98A711-ACDB-4E65-9888-BA1567B5A60D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D98A711-ACDB-4E65-9888-BA1567B5A60D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D98A711-ACDB-4E65-9888-BA1567B5A60D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D98A711-ACDB-4E65-9888-BA1567B5A60D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +103,7 @@ Global
 		{55196918-5CF9-446E-B850-334B9C0FAD52} = {033BF716-114E-45AB-A552-4F78EB7E7966}
 		{D4719AF0-AD85-4D1D-8107-1DAFD79E4DDA} = {033BF716-114E-45AB-A552-4F78EB7E7966}
 		{C0B12AEB-A06C-4EA3-8C57-53E4BB06C23A} = {DEA17440-C044-432B-AD45-647E2901D117}
+		{1D98A711-ACDB-4E65-9888-BA1567B5A60D} = {F5223AD5-2641-4BAB-A3FC-F9B3322DDADD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03143751-A94B-4C3A-800B-3C52C50C54A6}

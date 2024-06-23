@@ -4,12 +4,13 @@ import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from "./LanguageSwitcher";
+import { Role } from "../models/roles";
 
 export default observer(function NavBar() {
     const {userStore: {user, logout}} = useStore();
     const { t } = useTranslation();
     return (
-        <Menu inverted fixed='top'>
+        <Menu inverted fixed='bottom'>
             <Container>
                 <Menu.Item as={NavLink} to='/' header>
                     <img src='/assets/logo.png' alt='logo' style={{marginRight: 10}}/>
@@ -20,6 +21,11 @@ export default observer(function NavBar() {
                 <Menu.Item>
                     <Button as={NavLink} to='/createActivity' positive content={t('createSession')} />
                 </Menu.Item>
+                {user?.role === Role.ADMIN &&
+                    <Menu.Item>
+                        <Button as={NavLink} to='/admin' positive content='Admin' />
+                    </Menu.Item>
+                }
                 <Menu.Item position='right'>
                     <Image avatar spaced='right' src={user?.image || '/assets/user.png'} />
                     <Dropdown pointing='top left' text={user?.displayName}>

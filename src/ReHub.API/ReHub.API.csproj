@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Plugins\RiHub.Strava\RiHub.Strava.csproj" />
     <ProjectReference Include="..\ReHub.Application\ReHub.Application.csproj" />
     <ProjectReference Include="..\Rehub.CoreAdmin\Rehub.CoreAdmin.csproj" />
     <ProjectReference Include="..\ReHub.Infrastructure\ReHub.Infrastructure.csproj" />

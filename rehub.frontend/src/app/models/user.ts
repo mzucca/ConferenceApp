@@ -1,8 +1,12 @@
+import { Role } from "./roles";
+
 export interface User {
     username: string;
     displayName: string;
     token: string;
+    roles: Role[],
     image?: string;
+    role: string;
 }
 
 export interface OauthToken {

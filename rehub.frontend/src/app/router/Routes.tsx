@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
+import { createBrowserRouter, Link, Navigate, RouteObject } from "react-router-dom";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import ActivityDetails from "../../features/activities/details/ActivityDetails";
 import ActivityForm from "../../features/activities/form/ActivityForm";
@@ -22,6 +22,7 @@ export const routes: RouteObject[] = [
                 {path:'sessions/:room', element: <SessionView />},
                 {path: 'manage/:id', element: <ActivityForm key='manage' />},
                 {path: 'profiles/:username', element: <ProfilePage />},
+                {path: 'admin', element: <Link to={{pathname: process.env.REACT_APP_ADMINT_URL}} />},
                 {path: 'errors', element: <TestErrors />}
             ]},
             {path: 'not-found', element: <NotFound />},

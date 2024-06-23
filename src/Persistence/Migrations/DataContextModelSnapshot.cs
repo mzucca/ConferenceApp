@@ -294,9 +294,6 @@ namespace ReHub.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("DoctorId")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
@@ -306,8 +303,6 @@ namespace ReHub.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChannelAdminId");
-
-                    b.HasIndex("DoctorId");
 
                     b.ToTable("Conferences");
                 });
@@ -648,11 +643,11 @@ namespace ReHub.Persistence.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Surname")
                         .HasColumnType("text");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -668,6 +663,26 @@ namespace ReHub.Persistence.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthProvider = 0,
+                            CreatedAt = new DateTime(2024, 6, 21, 16, 6, 10, 96, DateTimeKind.Utc).AddTicks(6666),
+                            Deleted = false,
+                            DisplayName = "MarioZ",
+                            Email = "admin@gmail.com",
+                            Gender = 0,
+                            Image = "test",
+                            IsVerified = true,
+                            Name = "Mario",
+                            Password = "123456789",
+                            Role = 3,
+                            Surname = "Z.",
+                            UpdatedAt = new DateTime(2024, 6, 21, 16, 6, 10, 96, DateTimeKind.Utc).AddTicks(6667),
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("ReHub.Domain.UserFollowing", b =>
@@ -683,33 +698,6 @@ namespace ReHub.Persistence.Migrations
                     b.HasIndex("TargetId");
 
                     b.ToTable("UserFollowings");
-                });
-
-            modelBuilder.Entity("ReHub.Domain.Admin", b =>
-                {
-                    b.HasBaseType("ReHub.Domain.User");
-
-                    b.HasDiscriminator().HasValue("Admin");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AuthProvider = 0,
-                            CreatedAt = new DateTime(2024, 6, 16, 10, 5, 32, 966, DateTimeKind.Utc).AddTicks(6387),
-                            Deleted = false,
-                            DisplayName = "MarioZ",
-                            Email = "admin@gmail.com",
-                            Gender = 0,
-                            Image = "test",
-                            IsVerified = true,
-                            Name = "Mario",
-                            Password = "123456789",
-                            Surname = "Z.",
-                            Type = 0,
-                            UpdatedAt = new DateTime(2024, 6, 16, 10, 5, 32, 966, DateTimeKind.Utc).AddTicks(6388),
-                            UserName = "admin@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("ReHub.Domain.Client", b =>
@@ -732,27 +720,7 @@ namespace ReHub.Persistence.Migrations
 
                     b.HasIndex("ReferrerId");
 
-                    b.ToTable("Users", t =>
-                        {
-                            t.Property("SubType")
-                                .HasColumnName("Client_SubType");
-                        });
-
                     b.HasDiscriminator().HasValue("Client");
-                });
-
-            modelBuilder.Entity("ReHub.Domain.Doctor", b =>
-                {
-                    b.HasBaseType("ReHub.Domain.User");
-
-                    b.Property<string>("About")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("SubType")
-                        .HasColumnType("integer");
-
-                    b.HasDiscriminator().HasValue("Doctor");
                 });
 
             modelBuilder.Entity("ReHub.Domain.ActivityAttendee", b =>
@@ -780,8 +748,8 @@ namespace ReHub.Persistence.Migrations
                         .WithMany("Appointments")
                         .HasForeignKey("ClientId");
 
-                    b.HasOne("ReHub.Domain.Doctor", "Speaker")
-                        .WithMany("Appointments")
+                    b.HasOne("ReHub.Domain.User", "Speaker")
+                        .WithMany()
                         .HasForeignKey("SpeakerId");
 
                     b.Navigation("Speaker");
@@ -837,10 +805,6 @@ namespace ReHub.Persistence.Migrations
                     b.HasOne("ReHub.Domain.User", "ChannelAdmin")
                         .WithMany()
                         .HasForeignKey("ChannelAdminId");
-
-                    b.HasOne("ReHub.Domain.Doctor", null)
-                        .WithMany("AdministratedChannels")
-                        .HasForeignKey("DoctorId");
 
                     b.Navigation("ChannelAdmin");
                 });
@@ -973,8 +937,8 @@ namespace ReHub.Persistence.Migrations
 
             modelBuilder.Entity("ReHub.Domain.Client", b =>
                 {
-                    b.HasOne("ReHub.Domain.Doctor", "Doctor")
-                        .WithMany("Clients")
+                    b.HasOne("ReHub.Domain.User", "Doctor")
+                        .WithMany()
                         .HasForeignKey("DoctorId");
 
                     b.HasOne("ReHub.Domain.ReferrerDoctor", "Referrer")
@@ -1052,15 +1016,6 @@ namespace ReHub.Persistence.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("UsedCoupons");
-                });
-
-            modelBuilder.Entity("ReHub.Domain.Doctor", b =>
-                {
-                    b.Navigation("AdministratedChannels");
-
-                    b.Navigation("Appointments");
-
-                    b.Navigation("Clients");
                 });
 #pragma warning restore 612, 618
         }

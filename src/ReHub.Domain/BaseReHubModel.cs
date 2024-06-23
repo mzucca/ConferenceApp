@@ -5,6 +5,11 @@
 /// </summary>
 public class BaseReHubModel
 {
+    public BaseReHubModel() 
+    {
+        CreatedAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
+    }
     //[Key]
     //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }

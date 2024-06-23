@@ -6,16 +6,16 @@ namespace Rehub.Authorization.Extensions
 {
     public static class AuthorizationExtensions
     {
-        public static UserType GetRole(this ClaimsPrincipal user)
+        public static UserRole GetRole(this ClaimsPrincipal user)
         {
             Object result;
-            if (user == null) return UserType.None;
+            if (user == null) return UserRole.None;
             var role = user.FindFirstValue(ClaimTypes.Role);
 
-            if (Enum.TryParse(typeof(UserType), role, out result))
-                return (UserType) result;
+            if (Enum.TryParse(typeof(UserRole), role, out result))
+                return (UserRole) result;
             else 
-                return UserType.None;
+                return UserRole.None;
         }
         public static int GetUserId(this ClaimsPrincipal user)
         {

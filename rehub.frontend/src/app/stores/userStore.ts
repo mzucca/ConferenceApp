@@ -3,6 +3,7 @@ import agent from "../api/agent";
 import { User, UserFormValues, OauthToken } from "../models/user";
 import { router } from "../router/Routes";
 import { store } from "./store";
+import { Role } from "../models/roles";
 
 export default class UserStore {
     user: User | null = null;
@@ -13,6 +14,9 @@ export default class UserStore {
 
     get isLoggedIn() {
         return !!this.user;
+    }
+    get isAdmin() {
+        return !!this.user && this.user.role===Role.ADMIN;
     }
     externalLogin = async (provider: string, token: string) => {
         try{

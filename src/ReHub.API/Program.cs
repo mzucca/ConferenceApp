@@ -1,6 +1,8 @@
 using Serilog;
 using ReHub.BackendAPI.Extensions;
 using ReHub.BackendAPI.Middleware;
+using Microsoft.AspNetCore.Diagnostics;
+using RiHub.Strava;
 
 namespace ReHub.BackendAPI
 {
@@ -17,8 +19,12 @@ namespace ReHub.BackendAPI
 
             builder.Configuration.AddEnvironmentVariables(prefix: "ReHub");
 
-            builder.Services.AddApplicationServices(builder.Configuration);
+
+            // Add plugins
             builder.Services.AddCoreAdmin();
+            builder.Services.AddStravaPlugin(builder.Configuration);
+
+            builder.Services.AddApplicationServices(builder.Configuration);
 
             var app = builder.Build();
             //MigrateDatabase(app);
@@ -58,13 +64,46 @@ namespace ReHub.BackendAPI
                 //});
             }
 
+
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseExceptionHandler(errorApp =>
+            {
+                errorApp.Run(async context => 
+                {
+                    var exception = context.Features.Get<IExceptionHandlerFeature>();
+                    var logger = context.Features.Get<ILogger<Program>>();
+                    Type type = exception?.Error.GetType();
+                    if(type==null)
+                    {
+                        context.Response.StatusCode = 400;
+                        await context.Response.WriteAsync("Uncaught error");
+                    }
+                    else
+                    {
+                        logger?.LogError(exception.Error?.Message);
+                        switch (type)
+                        {
+                            case Type _ when type == typeof(InvalidTimeZoneException):
+                                context.Response.StatusCode = 422;
+                                await context.Response.WriteAsync(exception.Error?.Message);
+                                break;
+                            default:
+                                context.Response.StatusCode = 500;
+                                await context.Response.WriteAsync(exception.Error?.Message);
+                                break;
+                        }
+                    }
+
+                });
+            });
 
             //Add support to logging request with SERILOG
             app.UseSerilogRequestLogging();
 
+            // Plugins
             app.UseCoreAdminCustomTitle("ReHub App Admin Tool");
+            app.UseStravaPlugin("plugins");
 
             // Required for Core Admin
             app.MapDefaultControllerRoute();

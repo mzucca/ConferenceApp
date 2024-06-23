@@ -81,18 +81,16 @@ namespace ReHub.Persistence.Migrations
                     Image = table.Column<string>(type: "text", nullable: true),
                     DisplayName = table.Column<string>(type: "text", nullable: false),
                     Bio = table.Column<string>(type: "text", nullable: true),
+                    Role = table.Column<int>(type: "integer", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: true),
                     AuthProvider = table.Column<int>(type: "integer", nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
                     Deleted = table.Column<bool>(type: "boolean", nullable: false),
                     IsVerified = table.Column<bool>(type: "boolean", nullable: false),
                     Discriminator = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
-                    Client_SubType = table.Column<int>(type: "integer", nullable: true),
+                    SubType = table.Column<int>(type: "integer", nullable: true),
                     Balance = table.Column<int>(type: "integer", nullable: true),
                     DoctorId = table.Column<int>(type: "integer", nullable: true),
                     ReferrerId = table.Column<int>(type: "integer", nullable: true),
-                    SubType = table.Column<int>(type: "integer", nullable: true),
-                    About = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -240,7 +238,6 @@ namespace ReHub.Persistence.Migrations
                     ChannelName = table.Column<string>(type: "text", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     ChannelAdminId = table.Column<int>(type: "integer", nullable: true),
-                    DoctorId = table.Column<int>(type: "integer", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -250,11 +247,6 @@ namespace ReHub.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_Conferences_Users_ChannelAdminId",
                         column: x => x.ChannelAdminId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Conferences_Users_DoctorId",
-                        column: x => x.DoctorId,
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
@@ -505,8 +497,8 @@ namespace ReHub.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AuthProvider", "Bio", "CreatedAt", "Deleted", "Discriminator", "DisplayName", "Email", "Gender", "Image", "IsVerified", "Name", "Password", "Surname", "Type", "UpdatedAt", "UserName" },
-                values: new object[] { 1, 0, null, new DateTime(2024, 6, 16, 10, 5, 32, 966, DateTimeKind.Utc).AddTicks(6387), false, "Admin", "MarioZ", "admin@gmail.com", 0, "test", true, "Mario", "123456789", "Z.", 0, new DateTime(2024, 6, 16, 10, 5, 32, 966, DateTimeKind.Utc).AddTicks(6388), "admin@gmail.com" });
+                columns: new[] { "Id", "AuthProvider", "Bio", "CreatedAt", "Deleted", "Discriminator", "DisplayName", "Email", "Gender", "Image", "IsVerified", "Name", "Password", "Role", "Surname", "UpdatedAt", "UserName" },
+                values: new object[] { 1, 0, null, new DateTime(2024, 6, 21, 16, 6, 10, 96, DateTimeKind.Utc).AddTicks(6666), false, "User", "MarioZ", "admin@gmail.com", 0, "test", true, "Mario", "123456789", 3, "Z.", new DateTime(2024, 6, 21, 16, 6, 10, 96, DateTimeKind.Utc).AddTicks(6667), "admin@gmail.com" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActivityAttendees_ActivityId",
@@ -568,11 +560,6 @@ namespace ReHub.Persistence.Migrations
                 name: "IX_Conferences_ChannelAdminId",
                 table: "Conferences",
                 column: "ChannelAdminId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Conferences_DoctorId",
-                table: "Conferences",
-                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CouponUsers_ClientId",

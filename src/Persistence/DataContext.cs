@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ReHub.Domain;
 using ReHub.Domain.Enums;
@@ -36,14 +37,12 @@ public class DataContext : DbContext
     public virtual DbSet<ConferenceHistory> ConferenceHistories { get; set; }
     public virtual DbSet<CouponUser> CouponUsers { get; set; }
     public virtual DbSet<DiscountCoupon> DiscountCoupons { get; set; }
-    public virtual DbSet<Doctor> Doctors { get; set; }
     public virtual DbSet<LessonPackage> LessonPackages { get; set; }
     public virtual DbSet<Notification> Notifications { get; set; }
     public virtual DbSet<NotificationRecipient> NotificationRecipients { get; set; }
     public virtual DbSet<Payment> Payments { get; set; }
     public virtual DbSet<ReferrerDoctor> ReferrerDoctors { get; set; }
     public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<Admin> Admins { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -87,14 +86,10 @@ public class DataContext : DbContext
             .WithOne(e => e.Sender)
             .HasForeignKey(e => e.SenderId);
 
-        modelBuilder.Entity<Doctor>()
-            .HasMany(e => e.Appointments)
-            .WithOne(e => e.Speaker)
-            .HasForeignKey(e => e.SpeakerId);
 
-        modelBuilder.Entity<Admin>()
+        modelBuilder.Entity<User>()
             .HasData(
-                new Admin
+                new User
                 {
                     Id = 1,
                     Name = "Mario",
@@ -105,7 +100,8 @@ public class DataContext : DbContext
                     Password = "123456789",
                     Email = "admin@gmail.com",
                     IsVerified = true,
-                    Image = "test"
+                    Image = "test",
+                    Role = UserRole.Admin
                 }
             );
     }

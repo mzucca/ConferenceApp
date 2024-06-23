@@ -26,7 +26,7 @@ public partial class Appointment : BaseReHubModel
     //[ForeignKey("SpeakerId")]
     //[InverseProperty("Appointments")]
     // TODO chane speaker to Doctor 
-    public virtual Doctor Speaker { get; set; }
+    public virtual User Speaker { get; set; }
     public override string ToString()
     {
         return $"Appointment(id={Id})";
