@@ -57,3 +57,4 @@
 /src/ReHub.API/obj
 /src/Plugins/RiHub.Strava/bin/Debug/net8.0
 /src/Plugins/RiHub.Strava/obj
+/rehub.frontend/package-lock.json
